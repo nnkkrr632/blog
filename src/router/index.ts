@@ -32,14 +32,15 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue')
     },
     {
-      path: '/tags/:tagId',
+      path: '/tags/:tagSlug',
       name: 'list-by-tag',
       component: ListByTagView
     },
     {
       path: '/posts/:slug',
       name: 'detail',
-      component: DetailView
+      component: DetailView,
+      props: true
     },
   ]
 })

@@ -2,10 +2,11 @@
 import { ref, reactive, onMounted } from 'vue';
 import type { Post } from '../plugins/interfaces';
 import DateComponent from './DateComponent.vue';
+import TagsComponent from './TagsComponent.vue';
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
-interface Props extends Omit<Post, ''> {}
-const props = defineProps<{ post: Props; flameUrl: string }>();
+interface PostProps extends Omit<Post, ''> {}
+const props = defineProps<{ post: PostProps; flameUrl: string }>();
 console.log('props', props);
 </script>
 
@@ -36,15 +37,8 @@ console.log('props', props);
         :revisedAt="props.post.revisedAt"
       />
       <!-- タグs -->
-      <ul class="flex flex-wrap mt-1">
-        <RouterLink
-          v-for="tag in props.post.tags"
-          :key="tag.slug"
-          :to="{ name: 'list-by-tag', params: { tagId: tag.slug } }"
-        >
-          <li class="list-none text-sky-600 mr-4">#{{ tag.name }}</li>
-        </RouterLink>
-      </ul>
+      <TagsComponent v-bind:tags="props.post.tags" />
+
     </div>
   </RouterLink>
 </template>

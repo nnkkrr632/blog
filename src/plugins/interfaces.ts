@@ -8,14 +8,12 @@ export interface Post {
   isShorts: boolean;
   image: Image;
   tags: Tag[];
-  body: string;
+  markdown: string;
 }
 
 export interface Image {
   id: string;
   url: string;
-  // height: number;
-  // width: number;
 }
 
 export interface Tag {

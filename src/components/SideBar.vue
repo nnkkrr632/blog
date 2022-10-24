@@ -3,7 +3,7 @@ import { RouterLink } from 'vue-router';
 import { ref, reactive, onMounted } from 'vue';
 
 interface Tag {
-  id: string;
+  slug: string;
   name: string;
   image: string;
   count: number;
@@ -12,31 +12,31 @@ interface Tag {
 const tags: Tag[] = [
   {
     image: 'https://placehold.jp/150x150.png',
-    id: 'vuejs',
+    slug: 'vuejs',
     name: 'Vue.js',
     count: 3,
   },
   {
     image: 'https://placehold.jp/150x150.png',
-    id: 'vuetify',
+    slug: 'vuetify',
     name: 'Vuetify',
     count: 4,
   },
   {
     image: 'https://placehold.jp/150x150.png',
-    id: 'nuxtjs',
+    slug: 'nuxtjs',
     name: 'NuxtJS',
     count: 5,
   },
   {
     image: 'https://placehold.jp/150x150.png',
-    id: 'typescript',
+    slug: 'typescript',
     name: 'TypeScript',
     count: 6,
   },
   {
     image: 'https://placehold.jp/150x150.png',
-    id: 'javascript',
+    slug: 'javascript',
     name: 'JavaScript',
     count: 7,
   },
@@ -110,8 +110,8 @@ onMounted(() => {
       <ul>
         <RouterLink
           v-for="tag in displayedTags"
-          :key="tag.id"
-          :to="{ name: 'list-by-tag', params: { tagId: tag.id } }"
+          :key="tag.slug"
+          :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
         >
           <li class="py-2 pl-5 hover:bg-slate-300">
             <img
