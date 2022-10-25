@@ -162,7 +162,7 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div id="sidebar" class="flex flex-col tex-sm bg-slate-100 w-16 xl:w-60">
+  <div id="sidebar" class="hidden sm:flex flex-col tex-sm bg-slate-100 w-16 xl:w-60">
     <div class="sticky top-0 overflow-y-auto h-screen">
       <!-- ホーム -->
       <RouterLink to="/">
@@ -183,7 +183,7 @@ onMounted(() => {
         </div>
       </RouterLink>
       <!-- 情報 -->
-      <RouterLink to="/2">
+      <RouterLink to="/info">
         <div
           class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5"
         >

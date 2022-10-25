@@ -11,7 +11,6 @@ import SideBar from './components/SideBar.vue';
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
       />
-      <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.1/styles/github-dark.css" /> -->
     </head>
     <div>
       <!-- ヘッダー -->
@@ -26,9 +25,9 @@ import SideBar from './components/SideBar.vue';
 
       <div class="flex">
         <!-- サイドバー -->
-        <SideBar class="hidden sm:flex"/>
+        <SideBar />
         <!-- メイン -->
-        <div class="bg-slate-600 px-2 sm:px-3 xl:px-5 py-3 w-full box-border">
+        <div class="bg-slate-600 px-2 sm:px-3 xl:px-5 py-3 w-full box-border break-all">
           <main>
             <RouterView />
           </main>

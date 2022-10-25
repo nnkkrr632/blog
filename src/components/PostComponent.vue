@@ -15,7 +15,7 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
 <template>
   <RouterLink
     :to="{ name: 'detail', params: { slug: props.post.slug } }"
-    class="bg-gray-100 p-2 pb-8 text-start break-words font-semibold"
+    class="bg-gray-100 p-2 pb-8 text-start break-words font-semibold hover:bg-slate-200"
   >
     <!-- 画像 -->
     <div class="relative border-y">

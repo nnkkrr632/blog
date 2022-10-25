@@ -18,7 +18,7 @@ import type { apiResponse, Post } from '../plugins/interfaces';
 //   method: 'GET',
 // };
 const posts = ref<Post[]>([]);
-const flameUrl = ref<string>();
+const flameUrl = ref<string>('flameUrlId');
 // const getPosts = async () => {
 //   try {
 //     console.log(import.meta.env.VITE_API_KEY);
@@ -64,9 +64,8 @@ const getPosts = async () => {
               slug
             }
           }
-          materials (where: { indicator: "shorts" }) {
+          materials(where: { name: "shorts" }) {
             image {
-              id
               url
             }
           }
@@ -79,15 +78,12 @@ const getPosts = async () => {
     posts.value = response.data.posts;
     console.log('posts', posts);
     console.log('posts.value', posts.value);
-    
-    
+
     flameUrl.value = response.data.materials.image.url;
-    console.log('flame', response.data.materials)
+    console.log('flame', response.data.materials);
   } catch (e) {
     console.log('エラー発生');
     console.log(e);
-
-  
   }
 };
 
@@ -102,7 +98,12 @@ onMounted(() => {
     <button @click="getPosts">ボタン</button>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <PostComponent v-for="post in posts" :key="post.id" :post="post" :flameUrl="flameUrl" />
+      <PostComponent
+        v-for="post in posts"
+        :key="post.id"
+        :post="post"
+        :flameUrl="flameUrl"
+      />
     </div>
   </div>
 </template>
