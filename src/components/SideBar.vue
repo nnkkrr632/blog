@@ -10,6 +10,36 @@ interface Tag {
 }
 
 const tags: Tag[] = [
+{
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'vuejs',
+    name: 'Vue.js',
+    count: 3,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'vuetify',
+    name: 'Vuetify',
+    count: 4,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'nuxtjs',
+    name: 'NuxtJS',
+    count: 5,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'typescript',
+    name: 'TypeScript',
+    count: 6,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'javascript',
+    name: 'JavaScript',
+    count: 7,
+  },
   {
     image: 'https://placehold.jp/150x150.png',
     slug: 'vuejs',
@@ -40,9 +70,69 @@ const tags: Tag[] = [
     name: 'JavaScript',
     count: 7,
   },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'vuejs',
+    name: 'Vue.js',
+    count: 3,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'vuetify',
+    name: 'Vuetify',
+    count: 4,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'nuxtjs',
+    name: 'NuxtJS',
+    count: 5,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'typescript',
+    name: 'TypeScript',
+    count: 6,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'javascript',
+    name: 'JavaScript',
+    count: 7,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'vuejs',
+    name: 'Vue.js',
+    count: 3,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'vuetify',
+    name: 'Vuetify',
+    count: 4,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'nuxtjs',
+    name: 'NuxtJS',
+    count: 5,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'typescript',
+    name: 'TypeScript',
+    count: 29,
+  },
+  {
+    image: 'https://placehold.jp/150x150.png',
+    slug: 'javascript',
+    name: 'JavaScript',
+    count: 30,
+  },
 ];
 
-const defaultTagCount = 3;
+const defaultTagCount = 15;
 const toggleObject = ref({ display: false, image: 'expand_more', text: '' });
 
 //宣言するときにrefになってないとhtmlに表示されない？
@@ -72,37 +162,37 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div id="sidebar" class="flex flex-col tex-sm bg-slate-100 w-16 xl:w-56">
-    <!-- ホーム -->
-    <RouterLink to="/">
-      <div
-        class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5"
-      >
-        <span class="material-symbols-outlined xl:mr-6">home</span>
-        <div class="text-[7px] xl:text-sm">ホーム</div>
-      </div>
-    </RouterLink>
-    <!-- ショート -->
-    <RouterLink :to="{ name: 'shorts' }">
-      <div
-        class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5"
-      >
-      <span class="material-symbols-outlined xl:mr-6">electric_bolt</span>
-        <div class="text-[7px] xl:text-sm">ショート</div>
-      </div>
-    </RouterLink>
-    <!-- 情報 -->
-    <RouterLink to="/2">
-      <div
-        class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5"
-      >
-        <span class="material-symbols-outlined xl:mr-6">info</span>
-        <div class="text-[7px] xl:text-sm">情報</div>
-      </div>
-    </RouterLink>
-
+  <div id="sidebar" class="flex flex-col tex-sm bg-slate-100 w-16 xl:w-60">
+    <div class="sticky top-0 overflow-y-auto h-screen">
+      <!-- ホーム -->
+      <RouterLink to="/">
+        <div
+          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5"
+        >
+          <span class="material-symbols-outlined xl:mr-6">home</span>
+          <div class="text-[7px] xl:text-sm">ホーム</div>
+        </div>
+      </RouterLink>
+      <!-- ショート -->
+      <RouterLink :to="{ name: 'shorts' }">
+        <div
+          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5"
+        >
+          <span class="material-symbols-outlined xl:mr-6">electric_bolt</span>
+          <div class="text-[7px] xl:text-sm">ショート</div>
+        </div>
+      </RouterLink>
+      <!-- 情報 -->
+      <RouterLink to="/2">
+        <div
+          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5"
+        >
+          <span class="material-symbols-outlined xl:mr-6">info</span>
+          <div class="text-[7px] xl:text-sm">情報</div>
+        </div>
+      </RouterLink>
     <!-- タグリストセクション -->
-    <div id="tagListSection" class="invisible xl:visible">
+    <div id="tagListSection" class="invisible xl:visible mb-24">
       <!-- ボーダー -->
       <p class="mt-4 pt-4 border-t border-slate-300"></p>
       <!-- タグ別アイコン -->
@@ -136,6 +226,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
@@ -148,7 +239,7 @@ onMounted(() => {
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
   }
-  div {
+  div, li {
     background-color: rgb(100 116 139);
     font-weight: bold;
     &:hover {

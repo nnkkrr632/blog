@@ -4,35 +4,35 @@ import { ref, reactive, onMounted } from 'vue';
 const props = defineProps<{ postedAt: string; revisedAt: string }>();
 console.log('ここはDateComponentのprops↓', props);
 
-const postDate = ref(new Date(props.postedAt));
-const revisedDate = ref(new Date(props.revisedAt));
-console.log('postDate↓', postDate);
-console.log('revisedDate↓', revisedDate);
-if (revisedDate.value) {
-  console.log('revisedDateはtrue');
-} else {
-  console.log('revisedDateはfalse');
-}
+const state = reactive({
+  postDate: new Date(0),
+  revisedDate: new Date(0)
+})
+state.postDate = new Date(props.postedAt);
+state.revisedDate = new Date(props.revisedAt)
+
+console.log('postDate↓', state.postDate);
+console.log('revisedDate↓', state.revisedDate);
 </script>
 
 <template>
-  <div class="flex flex-wrap space-x-3 bg-gray-300">
+  <div class="flex flex-wrap bg-gray-300">
     <!-- 作成日 -->
-    <div class="flex flex-wrap bg-slate-100">
+    <div class="flex flex-wrap bg-slate-100 mr-3">
       <span class="material-symbols-outlined opacity-60 mr-1">edit</span>
       <time
         :datetime="props.postedAt"
         class="text-slate-500 bg-white"
-        >{{ postDate.toLocaleDateString() }}</time
+        >{{ state.postDate.toLocaleDateString() }}</time
       >
     </div>
     <!-- 更新日 -->
-    <div v-if="Number(revisedDate)" class="flex flex-wrap bg-slate-100">
+    <div v-if="Number(state.revisedDate)" class="flex flex-wrap bg-slate-100">
       <span class="material-symbols-outlined opacity-60 mr-1">update</span>
       <time
         :datetime="props.revisedAt"
         class="text-slate-500 bg-white"
-        >{{ revisedDate.toLocaleDateString() }}</time
+        >{{ state.revisedDate.toLocaleDateString() }}</time
       >
     </div>
   </div>

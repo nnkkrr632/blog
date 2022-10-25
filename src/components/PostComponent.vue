@@ -8,6 +8,8 @@ import TagsComponent from './TagsComponent.vue';
 interface PostProps extends Omit<Post, ''> {}
 const props = defineProps<{ post: PostProps; flameUrl: string }>();
 console.log('props', props);
+
+const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : props.post.title);
 </script>
 
 <template>
@@ -16,7 +18,7 @@ console.log('props', props);
     class="bg-gray-100 p-2 pb-8 text-start break-words font-semibold"
   >
     <!-- 画像 -->
-    <div class="relative">
+    <div class="relative border-y">
       <img
         class="w-full"
         :class="{ absolute: props.post.isShorts }"
@@ -26,15 +28,15 @@ console.log('props', props);
     </div>
 
     <div id="text-area" class="mx-3">
-      <h3 :title="props.post.title" class="bg-slate-200 line-clamp-2 text-lg mt-2">
-        {{ props.post.title }} {{ props.post.isShorts ? '#shorts' : '' }}
+      <h3 :title="editedTitle" class="bg-slate-200 line-clamp-3 text-lg mt-2">
+        {{ editedTitle }}
       </h3>
-      <p :title="props.post.description" class="bg-slate-400 line-clamp-4 mt-1 text-slate-500">
+      <p :title="props.post.description" class="bg-slate-400 line-clamp-6 mt-1 text-slate-500 text-sm">
         {{ props.post.description }}
       </p>
       <DateComponent
         :postedAt="props.post.postedAt"
-        :revisedAt="props.post.revisedAt"
+        :revisedAt="props.post.revisedAt ?? ''"
       />
       <!-- タグs -->
       <TagsComponent v-bind:tags="props.post.tags" />
