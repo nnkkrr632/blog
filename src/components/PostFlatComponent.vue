@@ -17,7 +17,7 @@ const editedTitle = ref(
 <template>
   <RouterLink
     :to="{ name: 'detail', params: { slug: props.post.slug } }"
-    class="border-2 flex flex-wrap items-center xl:items-start bg-gray-100 p-1 xl:p-2 text-start break-words font-semibold hover:bg-slate-200"
+    class="flex flex-wrap items-center xl:items-start bg-gray-100 p-1 xl:p-2 text-start break-words font-semibold hover:bg-slate-200"
   >
     <!-- 画像 -->
     <div class="relative border-y w-32 xl:w-64">

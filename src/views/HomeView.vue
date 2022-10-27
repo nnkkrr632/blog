@@ -64,11 +64,6 @@ const getPosts = async () => {
               slug
             }
           }
-          materials(where: { name: "shorts" }) {
-            image {
-              url
-            }
-          }
         }
       `,
       // variables: someVariablesIfNeeded,
@@ -98,12 +93,7 @@ onMounted(() => {
     <button @click="getPosts">ボタン</button>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-      <PostComponent
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-        :flameUrl="flameUrl"
-      />
+      <PostComponent v-for="post in posts" :key="post.id" :post="post" />
     </div>
   </div>
 </template>

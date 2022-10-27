@@ -7,8 +7,8 @@ export interface Post {
   description: string;
   isShorts: boolean;
   image: Image;
-  tags: Tag[];
   markdown: string;
+  tags: Tag[];
 }
 
 export interface Image {

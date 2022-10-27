@@ -2,8 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ListByTagView from '../views/ListByTag.vue'
 import DetailView from '../views/DetailView.vue'
-import ShortsView from '../views/ShortsView.vue'
+import ShortView from '../views/ShortView.vue'
 import InfoView from '../views/InfoView.vue'
+import TestView from '../views/TestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,9 +15,16 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/shorts',
-      name: 'shorts',
-      component: ShortsView
+      path: '/posts/:slug',
+      name: 'detail',
+      component: DetailView,
+      props: true
+    },
+    {
+      path: '/shorts/:slug',
+      name: 'short',
+      component: ShortView,
+      props: true
     },
     {
       path: '/info',
@@ -38,10 +46,9 @@ const router = createRouter({
       component: ListByTagView
     },
     {
-      path: '/posts/:slug',
-      name: 'detail',
-      component: DetailView,
-      props: true
+      path: '/test',
+      name: 'test',
+      component: TestView,
     },
   ]
 })

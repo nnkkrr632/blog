@@ -112,7 +112,7 @@ const getContents = async () => {
 </script>
 
 <template>
-  <div>
+  <div class="bg-white px-3 sm:px-4 xl:px-8 py-5 break-all w-full text-start">
     ここは記事詳細ページ
     あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -126,9 +126,9 @@ const getContents = async () => {
     <button @click="getContents">ボタン</button>
     <DetailComponent :post="post" />
 
-    <h2 class="mt-10 mb-5">
+    <h2 class="mt-12 sm:mt-20 pt-12 sm:pt-20 pb-5 border-t-2">
       <span
-        class="p-2 border-t-2 xl:text-lg bg-slate-300 border-slate-400 rounded-full"
+        class="px-[10px] py-[6px] border xl:text-lg bg-gray-200 border-slate-400 rounded-full"
         >関連記事</span
       >
     </h2>

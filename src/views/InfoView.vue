@@ -1,19 +1,18 @@
 <template>
-  <div>aaaaa</div>
-  <div class="bg-gray-100 h-screen">
+  <div class="bg-gray-100 min-h-[calc(100vh-3.5rem)]">
     <img
-      src="https://media.graphassets.com/resize=fit:crop,height:380,width:3000/rbxXTlktSqGvZ2snvv5g"
+      src="https://media.graphassets.com/resize=fit:crop,height:480,width:3000/rbxXTlktSqGvZ2snvv5g"
     />
 
-    <div class="pt-4 px-10 sm:px-20 bg-gray-50">
-      <div class="flex flex-wrap items-center sm:space-x-4">
+    <div class="pt-4 px-6 sm:px-20 bg-gray-50">
+      <div class="flex flex-wrap items-center space-x-4">
         <img
           src="https://avatars.githubusercontent.com/u/91203083"
-          class="hidden sm:block w-20 rounded-full"
+          class="block w-14 sm:w-20 rounded-full"
         />
         <div>
           <div class="text-lg sm:text-xl xl:text-3xl font-semibold">
-            nrpansの技術ブログ
+            nrpan's技術情報チャンネル
           </div>
           <div class="mt-1 text-sm text-gray-500">記事数 10記事</div>
         </div>
@@ -24,13 +23,13 @@
     </div>
     <!-- flex -->
     <div
-      class="flex flex-col sm:flex-row text-sm px-10 sm:px-20 space-y-12 sm:space-y-0 sm:space-x-32"
+      class="flex flex-col sm:flex-row text-sm px-6 sm:px-20 space-y-12 sm:space-y-0 sm:space-x-32"
     >
       <div class="basis-3/5">
         <dl>
           <dt class="text-base mt-6 mb-5">説明</dt>
           <dd class="border-b pb-8">
-            2022年からITエンジニアとして働いています。<br />業務や趣味の学びをアウトプットします(予定)。<br />Zennにも記事がありますので、よろしくお願いいたします。
+            2022年からITエンジニアとして働いています。<br />業務や個人の学びをアウトプットします(予定)。<br />Zennにも記事がありますので、よろしくお願いいたします。
           </dd>
           <dt class="text-base my-5">詳細</dt>
           <dd class="border-b pb-9 text-slate-500 text-xs">

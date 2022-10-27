@@ -13,6 +13,7 @@ console.log(props);
       v-for="tag in props.tags"
       :key="tag.slug"
       :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
+
     >
       <li class="list-none text-blue-600 mr-3">#{{ tag.name }}</li>
     </RouterLink>

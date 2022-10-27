@@ -10,7 +10,7 @@ interface Tag {
 }
 
 const tags: Tag[] = [
-{
+  {
     image: 'https://placehold.jp/150x150.png',
     slug: 'vuejs',
     name: 'Vue.js',
@@ -162,70 +162,57 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div id="sidebar" class="hidden sm:flex flex-col tex-sm bg-slate-100 w-16 xl:w-60">
-    <div class="sticky top-0 overflow-y-auto h-screen">
+  <div id="sidebar" class="hidden sm:flex flex-col tex-sm bg-slate-100 sm:w-16 xl:w-60">
+    <div class="sticky top-0 xl:overflow-y-auto  h-[calc(100vh-3.5rem)]">
       <!-- ホーム -->
       <RouterLink to="/">
         <div
-          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5"
-        >
+          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5 rounded-md">
           <span class="material-symbols-outlined xl:mr-6">home</span>
           <div class="text-[7px] xl:text-sm">ホーム</div>
         </div>
       </RouterLink>
       <!-- ショート -->
-      <RouterLink :to="{ name: 'shorts' }">
+      <RouterLink :to="{ name: 'short', params: { slug: 'graphcms-vue3-composition-api' } }">
         <div
-          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5"
-        >
+          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 focus:bg-slate-700 xl:pl-5 rounded-md">
           <span class="material-symbols-outlined xl:mr-6">electric_bolt</span>
           <div class="text-[7px] xl:text-sm">ショート</div>
         </div>
       </RouterLink>
       <!-- 情報 -->
       <RouterLink to="/info">
-        <div
-          class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5"
-        >
+        <div class="flex flex-col xl:flex-row items-center bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5 rounded-md">
           <span class="material-symbols-outlined xl:mr-6">info</span>
           <div class="text-[7px] xl:text-sm">情報</div>
         </div>
       </RouterLink>
-    <!-- タグリストセクション -->
-    <div id="tagListSection" class="invisible xl:visible mb-24">
-      <!-- ボーダー -->
-      <p class="mt-4 pt-4 border-t border-slate-300"></p>
-      <!-- タグ別アイコン -->
-      <p class="text-sm text-start xl:pl-5">#タグ</p>
-      <ul>
-        <RouterLink
-          v-for="tag in displayedTags"
-          :key="tag.slug"
-          :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
-        >
-          <li class="py-2 pl-5 hover:bg-slate-300">
-            <img
-              :src="tag.image"
-              width="25"
-              class="inline xl:mr-5 rounded-full"
-            />{{ tag.name }}({{ tag.count }})
-          </li>
-        </RouterLink>
-      </ul>
-      <!-- トグル -->
-      <div
-        v-show="toggleObject.display"
-        class="flex flex-col xl:flex-row items-center cursor-pointer bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5"
-        @click="toggleTags"
-      >
-        <span class="material-symbols-outlined mr-5">{{
-          toggleObject.image
-        }}</span>
-        <div class="text-sm">
-          {{ toggleObject.text }}
+      <!-- タグリストセクション -->
+      <div id="tagListSection" class="hidden xl:block mb-24">
+        <!-- ボーダー -->
+        <p class="mt-4 pt-4 border-t border-slate-300"></p>
+        <!-- タグ別アイコン -->
+        <p class="text-sm text-start xl:pl-5">#タグ</p>
+        <ul>
+          <RouterLink v-for="tag in displayedTags" :key="tag.slug"
+            :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }">
+            <li class="py-2 pl-5 hover:bg-slate-300 rounded-md">
+              <img :src="tag.image" width="25" class="inline xl:mr-5 rounded-full" />{{ tag.name }}({{ tag.count }})
+            </li>
+          </RouterLink>
+        </ul>
+        <!-- トグル -->
+        <div v-show="toggleObject.display"
+          class="flex flex-col xl:flex-row items-center cursor-pointer bg-slate-200 py-2 hover:bg-slate-300 xl:pl-5"
+          @click="toggleTags">
+          <span class="material-symbols-outlined mr-5">{{
+              toggleObject.image
+          }}</span>
+          <div class="text-sm">
+            {{ toggleObject.text }}
+          </div>
         </div>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -239,9 +226,12 @@ onMounted(() => {
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
   }
-  div, li {
+
+  div,
+  li {
     background-color: rgb(100 116 139);
     font-weight: bold;
+
     &:hover {
       background-color: rgb(71 85 105);
     }

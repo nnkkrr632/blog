@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onBeforeMount, watchEffect} from 'vue';
+import { ref, reactive, onMounted, onBeforeMount, watchEffect } from 'vue';
 import type { Post } from '../plugins/interfaces';
 // マークダウン関連
 import { marked } from 'marked';
@@ -10,8 +10,8 @@ import DateComponent from './DateComponent.vue';
 
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
-interface Props extends Omit<Post, ''> {}
-const props = defineProps<{ post: Props;}>();
+interface Props extends Omit<Post, ''> { }
+const props = defineProps<{ post: Props; }>();
 console.log('ここはDetailComponent.vue。props', props);
 
 
@@ -24,16 +24,18 @@ marked.setOptions({
   silent: false, // trueにするとパースに失敗してもExceptionを投げなくなる
 });
 console.log('markedでbodyにHTMLを注入。↓')
-const body = ref<string>();
+const body = ref('');
+const editedTitle = ref('');
 
 //最初の画面ロード時はAPIでデータ取得前でnullが入ってくる。API取得後にbodyを生成できるようwatchを使う
-watchEffect( () => {
-    console.log('watchEffectの分岐入った')
-    if(props.post.markdown) {
-        console.log('watchEffectのifの、props.post.markdownが存在する分岐クリア')
-        body.value = marked(props.post.markdown) 
-    }
-    })
+watchEffect(() => {
+  console.log('watchEffectの分岐入った')
+  if (props.post.markdown) {
+    console.log('watchEffectのifの、props.post.markdownが存在する分岐クリア')
+    body.value = marked(props.post.markdown)
+    editedTitle.value = props.post.isShorts ? props.post.title + ' #shorts' : props.post.title
+  }
+})
 
 console.log('ここはDetailComponent.vue。body.value↓', body.value)
 
@@ -102,23 +104,20 @@ const json: string = marked(jsonExample);
 </script>
 
 <template class="bg-gray-200">
-  <div class="bg-white px-2 sm:px-3 xl:px-8 py-5 break-all w-full text-start">
-    ここは記事詳細ページ
+  <div class="">
+    ここはDetailCOmponent
     あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ
     aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-      <h1 class="text-3xl font-bold my-2">{{ props.post.title }}</h1>
-      <DateComponent
-        :postedAt="post.postedAt"
-        :revisedAt="post.revisedAt ?? 0"
-      />
-      <TagsComponent :tags="props.post.tags"></TagsComponent>
+    <h1 class="text-xl sm:text-3xl font-bold my-2">{{ editedTitle }}</h1>
+    <DateComponent :postedAt="post.postedAt" :revisedAt="post.revisedAt ?? 0" />
+    <TagsComponent :tags="props.post.tags"></TagsComponent>
 
-      <p class="py-4 my-4 border-y-2">{{ props.post.description }}</p>
-      <!-- 本文 -->
-      <section id="body-section">
-        <p v-html="body"></p>
-      </section>
+    <p class="bg-gray-100 p-2 mt-4 mb-2 rounded-md">{{ props.post.description }}</p>
+    <!-- 本文 -->
+    <section id="body-section">
+      <p v-html="body"></p>
+    </section>
   </div>
 </template>
 
@@ -139,28 +138,37 @@ const json: string = marked(jsonExample);
   ::v-deep(:not(pre) > code) {
     font-style: italic;
     background-color: rgb(226 232 240);
-    padding: 4px 6px;
+    padding: 3px 6px;
+    margin: 0 1px;
     border-radius: 0.2rem;
   }
 
   ::v-deep(table) {
     margin: 0.6rem 0 1.2rem;
+
     tr {
       box-sizing: border-box;
       display: table-row;
       border: solid rgb(100 116 139) 1px;
+
       th {
         padding: 0.5rem;
         font-weight: bold;
         background-color: rgb(203 213 225);
         border: solid rgb(100 116 139) 1px;
       }
+
       td {
         padding: 0.5rem;
         background: white;
         border: solid rgb(100 116 139) 1px;
       }
     }
+  }
+
+  ::v-deep(a) {
+    color: skyblue;
+    border-bottom: solid 1px;
   }
 
   ::v-deep(p + p) {
@@ -180,6 +188,7 @@ const json: string = marked(jsonExample);
     font-weight: bold;
     font-size: 1.3rem;
   }
+
   ::v-deep(h4) {
     margin: 1rem 0 0.5rem;
     font-weight: bold;
@@ -202,17 +211,21 @@ const json: string = marked(jsonExample);
 
   ::v-deep(ul) {
     margin: 0.4rem 0 0.4rem 1rem;
+
     li {
       text-indent: -1rem;
       padding-left: 1rem;
+
       &::before {
         content: '・';
         font-size: 120%;
       }
     }
   }
+
   ::v-deep(ol) {
     margin: 0.4rem 0 0.4rem 1rem;
+
     li {
       list-style-position: inside;
       list-style-type: decimal;
@@ -223,10 +236,12 @@ const json: string = marked(jsonExample);
 
   ::v-deep(li ol),
   ::v-deep(li ul) {
-    margin: 0 0 0 1rem;
+    margin: 0 0 0 0.8rem;
   }
 }
 </style>
 
 <!-- node_modules/hightlight.js/styles/github-dark.cssから読み込んでいる -->
-<style src="highlight.js/styles/github-dark.css"></style>
+<style src="highlight.js/styles/github-dark.css">
+
+</style>
