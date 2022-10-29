@@ -15,7 +15,7 @@ console.log(props);
       :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
 
     >
-      <li class="list-none text-blue-600 mr-3">#{{ tag.name }}</li>
+      <li class="list-none text-sky-600 mr-3">#{{ tag.name }}</li>
     </RouterLink>
   </ul>
 </template>

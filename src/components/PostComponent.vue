@@ -18,13 +18,13 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
     class="bg-gray-100 p-2 pb-8 text-start break-words font-semibold hover:bg-slate-200"
   >
     <!-- 画像 -->
-    <div class="relative">
+    <div class="relative border-y">
       <img
-        class="w-full rounded-lg border-y"
+        class="w-full rounded-lg"
         :class="{ absolute: props.post.isShorts }"
         :src="props.post.image.url"
       />
-      <img v-if="props.post.isShorts" class="w-full rounded-lg border-y" src="https://media.graphassets.com/xILXABzYRBqpxv0HGiWk" />
+      <img v-if="props.post.isShorts" class="w-full rounded-lg" src="https://media.graphassets.com/xILXABzYRBqpxv0HGiWk" />
     </div>
 
     <div id="text-area" class="mx-3">

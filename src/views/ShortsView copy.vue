@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue';
 import ShortComponent from '../components/ShortComponent.vue';
 import DetailComponent from '../components/DetailComponent.vue';
 import { useApolloClient } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import type { Post } from '../plugins/interfaces';
-
-
 
 const posts = ref<Post[]>([]);
 const targetPost = ref<{ index: number, post: Post }>({ index: 0, post: {} });
@@ -67,9 +65,7 @@ const getLeftPost = () => {
     console.log('ターゲットのポスト↓')
     console.log(targetPost.value.post)
 }
-onMounted(() => {
-    // getPosts();
-});
+
 </script>
 
 <template>
@@ -78,16 +74,16 @@ onMounted(() => {
         <button @click="getPosts">記事取得ボタン</button>
 
         <div class="flex items-center">
-            <button :disabled="targetPost.index === 0"
-                class="flex-1 disabled:text-slate-100" @click="getLeftPost">
+            <button :disabled="targetPost.index === 0" class="flex-1 disabled:text-slate-100" @click="getLeftPost"
+                @keypress.q="getLeftPost">
                 <span class="material-symbols-outlined">arrow_back_ios</span>
             </button>
             <div class="w-11/12">
                 <DetailComponent :post="targetPost.post"
                     class="p-3 bg-orange-300 overflow-y-auto h-[calc(100vh-3.5rem)]" />
             </div>
-            <button :disabled="targetPost.index === posts.length-1"
-                class="flex-1 disabled:text-slate-100" @click="getRightPost">
+            <button :disabled="targetPost.index === posts.length - 1" class="flex-1 disabled:text-slate-100"
+                @click="getRightPost" @keypress.right="getRightPost">
                 <span class="material-symbols-outlined">arrow_forward_ios</span>
             </button>
         </div>

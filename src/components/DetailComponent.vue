@@ -29,7 +29,7 @@ const editedTitle = ref('');
 
 //最初の画面ロード時はAPIでデータ取得前でnullが入ってくる。API取得後にbodyを生成できるようwatchを使う
 watchEffect(() => {
-  console.log('watchEffectの分岐入った')
+  console.log('DetailComponentでwatchEffectの分岐入った')
   if (props.post.markdown) {
     console.log('watchEffectのifの、props.post.markdownが存在する分岐クリア')
     body.value = marked(props.post.markdown)
@@ -167,7 +167,7 @@ const json: string = marked(jsonExample);
   }
 
   ::v-deep(a) {
-    color: skyblue;
+    color: rgb(2 132 199);
     border-bottom: solid 1px;
   }
 

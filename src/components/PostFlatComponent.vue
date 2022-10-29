@@ -6,7 +6,7 @@ import TagsComponent from './TagsComponent.vue';
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface PostProps extends Omit<Post, ''> {}
-const props = defineProps<{ post: PostProps; flameUrl: string }>();
+const props = defineProps<{ post: PostProps; }>();
 console.log('props', props);
 
 const editedTitle = ref(
@@ -22,10 +22,11 @@ const editedTitle = ref(
     <!-- 画像 -->
     <div class="relative border-y w-32 xl:w-64">
       <img
+        class="rounded-lg"
         :class="{ absolute: props.post.isShorts }"
         :src="props.post.image.url"
       />
-      <img v-if="props.post.isShorts" class="" :src="props.flameUrl" />
+      <img v-if="props.post.isShorts" class="rounded-lg" src="https://media.graphassets.com/xILXABzYRBqpxv0HGiWk" />
     </div>
 
     <!-- テキスト -->

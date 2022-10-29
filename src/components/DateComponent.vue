@@ -9,17 +9,20 @@ const state = reactive({
   revisedDate: new Date(0),
 });
 
+state.postDate = new Date(props.postedAt);
+  if(props.revisedAt) {
+    state.revisedDate = new Date(props.revisedAt);
+  }
+
 //API取得前に入ってきてしまうからAPI取得後このコンポーネントに渡ってきたとき再代入
 watchEffect(() => {
-  console.log('watchEffectの分岐入った');
+  console.log('DateComponentでwatchEffectの分岐入った');
   state.postDate = new Date(props.postedAt);
   if(props.revisedAt) {
     state.revisedDate = new Date(props.revisedAt);
   }
 });
 
-console.log('postDate↓', state.postDate);
-console.log('revisedDate↓', state.revisedDate);
 </script>
 
 <template>

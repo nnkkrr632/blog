@@ -20,7 +20,6 @@ console.log(props.slug);
 //data句
 const post = ref<Post>({});
 const relatedPosts = ref<Post[]>([]);
-const flameUrl = ref('flameUrl');
 
 //apollo
 const { client } = useApolloClient();
@@ -85,11 +84,6 @@ const getContents = async () => {
             slug
           }
         }
-        materials(where: { name: "shorts" }) {
-          image {
-            url
-          }
-        }
       }
     `;
     const response2 = await client.query({
@@ -103,12 +97,14 @@ const getContents = async () => {
     console.log(response2);
     console.log(response2.data);
     relatedPosts.value = response2.data.posts;
-    flameUrl.value = response2.data.materials.image.url;
   } catch (e) {
     console.log('エラー発生');
     console.log(e);
   }
 };
+onMounted( async () => {
+  await getContents();  
+})
 </script>
 
 <template>
@@ -126,7 +122,7 @@ const getContents = async () => {
     <button @click="getContents">ボタン</button>
     <DetailComponent :post="post" />
 
-    <h2 class="mt-12 sm:mt-20 pt-12 sm:pt-20 pb-5 border-t-2">
+    <h2 class="mt-12 sm:mt-20 pt-12 sm:pt-20 pb-5 xl:pb-10 border-t-2">
       <span
         class="px-[10px] py-[6px] border xl:text-lg bg-gray-200 border-slate-400 rounded-full"
         >関連記事</span
@@ -137,7 +133,6 @@ const getContents = async () => {
         v-for="post in relatedPosts"
         :key="post.id"
         :post="post"
-        :flameUrl="flameUrl"
       />
     </div>
   </div>

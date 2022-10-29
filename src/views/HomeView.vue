@@ -18,7 +18,6 @@ import type { apiResponse, Post } from '../plugins/interfaces';
 //   method: 'GET',
 // };
 const posts = ref<Post[]>([]);
-const flameUrl = ref<string>('flameUrlId');
 // const getPosts = async () => {
 //   try {
 //     console.log(import.meta.env.VITE_API_KEY);
@@ -43,7 +42,6 @@ const getPosts = async () => {
       query: gql`
         query {
           posts {
-            id
             slug
             title
             description
@@ -74,7 +72,6 @@ const getPosts = async () => {
     console.log('posts', posts);
     console.log('posts.value', posts.value);
 
-    flameUrl.value = response.data.materials.image.url;
     console.log('flame', response.data.materials);
   } catch (e) {
     console.log('エラー発生');
@@ -82,8 +79,8 @@ const getPosts = async () => {
   }
 };
 
-onMounted(() => {
-  // getPosts();
+onMounted( async () => {
+  await getPosts();
 });
 </script>
 

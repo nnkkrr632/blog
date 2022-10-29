@@ -9,6 +9,8 @@ export interface Post {
   image: Image;
   markdown: string;
   tags: Tag[];
+  left?: string;
+  right?: string;
 }
 
 export interface Image {
@@ -22,13 +24,6 @@ export interface Tag {
   image: Image;
 }
 
-export interface CountedTag extends Tag {
-  count: number;
-}
-
-export interface apiResponse<T> {
-  contents: T[];
-  totalCount: number;
-  offset: number;
-  limit: number;
+export interface HasPostsTag extends Tag {
+  posts: { slug: string, title: string }[]
 }

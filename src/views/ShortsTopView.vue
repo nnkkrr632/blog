@@ -1,0 +1,1 @@
+<!-- Vue Router  でbeforeEnterをするためだけにコンポーネントを作成しています -->
