@@ -15,7 +15,7 @@ export const getTags = async () => {
             image {
               url(
                 transformation: {
-                  image: { resize: { width: 200, height: 200, fit: crop } }
+                  image: { resize: { width: 100, height: 100, fit: crop } }
                 }
               )
             }
@@ -28,11 +28,7 @@ export const getTags = async () => {
       `;
       // .vueファイル外でapolloClientを使うときはprovideApolloClientが必要
       provideApolloClient(apolloClient)
-      const response = await apolloClient.query({ query: query });
-      console.log('★★タグ一覧用取得');
-      console.log(response);
-      const unsortedTags: HasPostsTag[] = response.data.tags;
-      console.log('unsortedTags',unsortedTags);
+      const { data: { tags: unsortedTags } }: { data: { tags: HasPostsTag[]}} = await apolloClient.query({ query: query });
   
       // sliceしないとエラーになる。
       const sortedTags = unsortedTags.slice().sort( (a,b) => {
@@ -44,8 +40,6 @@ export const getTags = async () => {
         // 優先度2:名前昇順
         return a.name.localeCompare(b.name);
       });
-      console.log('ソート完了↓');
-      console.log(sortedTags)
       return sortedTags;
     } catch (e) {
       console.log('エラー発生');

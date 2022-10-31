@@ -1,8 +1,7 @@
 export interface Post {
-  id: string;
   slug: string;
   postedAt: string;
-  revisedAt: string;
+  revisedAt?: string;
   title: string;
   description: string;
   isShorts: boolean;
@@ -14,7 +13,6 @@ export interface Post {
 }
 
 export interface Image {
-  id: string;
   url: string;
 }
 
@@ -25,5 +23,5 @@ export interface Tag {
 }
 
 export interface HasPostsTag extends Tag {
-  posts: { slug: string, title: string }[]
+  posts: { slug: string }[]
 }

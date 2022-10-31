@@ -1,51 +1,42 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from 'vue';
+import { ref } from 'vue';
 import type { Post } from '../plugins/interfaces';
 import DateComponent from './DateComponent.vue';
 import TagsComponent from './TagsComponent.vue';
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
-interface PostProps extends Omit<Post, ''> {}
+interface PostProps extends Omit<Post, ''> { }
 const props = defineProps<{ post: PostProps; }>();
-console.log('props', props);
+console.log('ここはPostFlatComponent。props.post.slug→', props.post.slug);
 
-const editedTitle = ref(
-  props.post.isShorts ? props.post.title + ' #shorts' : props.post.title
-);
+const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : props.post.title);
 </script>
 
 <template>
-  <RouterLink
-    :to="{ name: 'detail', params: { slug: props.post.slug } }"
-    class="flex flex-wrap items-center xl:items-start bg-gray-100 p-1 xl:p-2 text-start break-words font-semibold hover:bg-slate-200"
-  >
-    <!-- 画像 -->
-    <div class="relative border-y w-32 xl:w-64">
-      <img
-        class="rounded-lg"
-        :class="{ absolute: props.post.isShorts }"
-        :src="props.post.image.url"
-      />
-      <img v-if="props.post.isShorts" class="rounded-lg" src="https://media.graphassets.com/xILXABzYRBqpxv0HGiWk" />
-    </div>
-
-    <!-- テキスト -->
-    <div class="flex-1 text-area mx-3">
-      <h3 :title="editedTitle" class="bg-slate-200 line-clamp-4 xl:text-lg">
-        {{ editedTitle }}
-      </h3>
-      <p
-        :title="props.post.description"
-        class="hidden bg-slate-400 xl:line-clamp-4 mt-1 text-slate-500 text-sm"
-      >
-        {{ props.post.description }}
-      </p>
-
-      <div class="flex flex-wrap">
-        <DateComponent :postedAt="props.post.postedAt" />
-        <!-- タグs -->
-        <TagsComponent v-bind:tags="props.post.tags" />
+  <div>
+    <RouterLink :to="{ name: 'detail', params: { slug: props.post.slug } }"
+      class="flex flex-wrap items-center xl:items-start p-1 xl:p-2 text-start break-words font-semibold hover:bg-gray-100">
+      <!-- 画像 -->
+      <div class="relative w-32 xl:w-64">
+        <img class="rounded-lg" :class="{ absolute: props.post.isShorts }" :src="props.post.image.url" />
+        <img v-if="props.post.isShorts" class="rounded-lg" src="https://media.graphassets.com/rWtEJuPZTMm9U4sPsKLV" />
       </div>
-    </div>
-  </RouterLink>
+
+      <!-- テキスト -->
+      <div class="flex-1 text-area mx-3">
+        <h3 :title="editedTitle" class="line-clamp-4 xl:font-semibold xl:text-lg">
+          {{ editedTitle }}
+        </h3>
+        <p :title="props.post.description" class="hidden xl:line-clamp-4 mt-1 text-gray-500 text-sm">
+          {{ props.post.description }}
+        </p>
+
+        <div class="flex flex-wrap">
+          <DateComponent :postedAt="props.post.postedAt" />
+          <!-- タグs -->
+          <TagsComponent v-bind:tags="props.post.tags" />
+        </div>
+      </div>
+    </RouterLink>
+  </div>
 </template>

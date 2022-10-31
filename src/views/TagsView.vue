@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, useRoute } from 'vue-router';
-import { ref, reactive, onMounted, computed } from 'vue';
+import { RouterLink } from 'vue-router';
+import { ref, onMounted } from 'vue';
 //共通型
 import type { HasPostsTag } from '@/plugins/interfaces';
 import { getTags } from '@/plugins/myLibrary';
@@ -15,34 +15,26 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="m-5 min-h-[calc(100vh-6rem)]">
-        <h1 class="text-xl sm:font-semibold border-b pb-1 mb-5">すべてのタグ</h1>
+    <div class="m-2 min-h-[calc(100vh-6rem)]">
+        <h1 class="text-xl sm:font-semibold border-b pb-1 my-5">すべてのタグ</h1>
         <div class="flex">
-            <div class="hidden sm:block basis-1/12"></div>
-            <ul class="flex flex-col space-y-3 sm:space-y-5 basis-10/12">
+            <ul class="flex flex-col space-y-3 w-full pl-6 sm:pl-20 xl:pl-32 pr-10 sm:space-y-5 sm:basis-4/6">
                 <li v-for="tag in tags" :key="tag.slug" :tag="tag">
                     <!-- アイコンとテキストの横並び -->
                     <RouterLink :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
-                        class="flex flex-wrap items-center hover:bg-gray-50">
-                        <img :src="tag.image.url" class="bg-white rounded-full w-10 h-10 sm:w-32 sm:h-32 mr-4 sm:mr-32" />
-                        <!-- テキストの縦並び -->
-                        <div class="flex flex-col">
-                            <h2 class="sm:text-xl sm:font-semibold">{{ tag.name }}</h2>
-                            <div class="text-gray-600 text-sm mb-1 hidden sm:flex">
-                                <div>{{ tag.posts.length }} 本の記事</div>
-                                <ul class="hidden">
-                                    <li v-for="post in tag.posts" :key="post.slug" :post="post" class="">
-                                        <RouterLink :to="{ name: 'detail', params: { slug: post.slug } }">・{{ post.title
-                                        }}
-                                        </RouterLink>
-                                    </li>
-                                </ul>
+                        class="flex flex-wrap justify-between items-center hover:bg-gray-100 rounded-lg">
+                        <div class="flex items-center">
+                            <img :src="tag.image.url" class="bg-white rounded-full w-10 h-10 sm:w-16 sm:h-16 mr-4 sm:mr-32" />
+                            <!-- テキストの縦並び -->
+                            <div class="flex sm:flex-col">
+                                <h2 class="sm:text-xl">{{ tag.name }}</h2>
+                                <div class="text-gray-500 text-sm mt-2 hidden sm:flex">{{ tag.posts.length }} 本の記事</div>
                             </div>
                         </div>
+                        <div class="sm:hidden text-gray-500 text-sm">{{ tag.posts.length }} 本の記事</div>
                     </RouterLink>
                 </li>
             </ul>
-            <div class="hidden sm:block basis-1/12"></div>
         </div>
     </div>
 </template>

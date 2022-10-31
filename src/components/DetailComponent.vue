@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted, onBeforeMount, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
 import type { Post } from '../plugins/interfaces';
-// マークダウン関連
 import { marked } from 'marked';
 import hljs from 'highlight.js';
-//部品
 import TagsComponent from './TagsComponent.vue';
-import DateComponent from './DateComponent.vue';
-
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface Props extends Omit<Post, ''> { }
 const props = defineProps<{ post: Props; }>();
 console.log('ここはDetailComponent.vue。props', props);
-
 
 //marked
 marked.setOptions({
@@ -23,106 +19,95 @@ marked.setOptions({
   breaks: true, // falseにすると改行入力は末尾の半角スペース2つになる
   silent: false, // trueにするとパースに失敗してもExceptionを投げなくなる
 });
-console.log('markedでbodyにHTMLを注入。↓')
 const body = ref('');
+const h2List = ref<[]>([]);
 const editedTitle = ref('');
-
-//最初の画面ロード時はAPIでデータ取得前でnullが入ってくる。API取得後にbodyを生成できるようwatchを使う
+//shortsではAPIfetchなしにデータだけ入れ替えで入ってくるのでwatchして反映する
 watchEffect(() => {
   console.log('DetailComponentでwatchEffectの分岐入った')
-  if (props.post.markdown) {
-    console.log('watchEffectのifの、props.post.markdownが存在する分岐クリア')
-    body.value = marked(props.post.markdown)
-    editedTitle.value = props.post.isShorts ? props.post.title + ' #shorts' : props.post.title
-  }
+  body.value = marked(props.post.markdown)
+  const matches: string[] = Array.from(body.value.matchAll(/<h2 id="(.*)">/g));
+  h2List.value = matches.map(match => match[1])
+  editedTitle.value = props.post.isShorts ? props.post.title + ' #shorts' : props.post.title
 })
 
-console.log('ここはDetailComponent.vue。body.value↓', body.value)
-
-const sentence: string = `
-# Hello World
-**TITLE** 
-
-\`const number = 1\`
-
-\`\`\`js
-function $initHighlight(block, cls) {
-  try {
-    if (cls.search(/\bno\-highlight\b/) != -1)
-      return process(block, true, 0x0F);
-  } catch (e) {
-    /* handle exception */
-  }
-  for (var i = 0 / 2; i < classes.length; i++) {
-    if (checkCondition(classes[i]) === undefined)
-      console.log('undefined');
-  }
-
-  return (
-    <div>
-      <web-component>{block}</web-component>
-    </div>
-  )
-}
-
-export  $initHighlight;\`\`\`
-# Hello World2
-
-<h1>Hello World</h1>
-`;
-
-const jsonExample = `
-\`\`\`json
-{
-  "data": {
-    "authors": [
-      {
-        "name": "中村 享介",
-        "affiliation": "PixelGrid Inc.",
-        "title": "Jamstackエンジニア",
-        "icon": {
-          "url": "https://media.graphcms.com/08EPcNB2QwqcPWdriqBq"
-        },
-        "articles": [
-          {
-            "id": "cjyjugko1494j08304cbjki3z"
-          }
-          // 中略
-       ],
-        "slug": "kyosuke"
-      }
-      // 中略
-    ]
-  }
-}
-\`\`\`
-`;
-
-const html: string = marked(sentence);
-const json: string = marked(jsonExample);
-
+// シェアボタン用
+const route = useRoute();
+const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
 </script>
 
-<template class="bg-gray-200">
-  <div class="">
-    ここはDetailCOmponent
-    あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああ
-    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+<template>
+  <div class="sm:text-base">
+    <h1 class="text-xl sm:text-3xl font-bold py-2 border-b">{{ editedTitle }}</h1>
+    <section class="bg-gray-100 p-3 mt-4 mb-2 rounded-lg">
+      <!-- 概要欄 -->
+      <div class="flex flex-col sm:flex-row sm:space-x-5">
+        <p><time :datetime="post.postedAt" class="font-bold">{{ post.postedAt.replaceAll('-', '/') }}</time>に公開済み</p>
+        <p v-if="post.revisedAt"><time :datetime="post.revisedAt" class="font-bold">{{
+            post.revisedAt.replaceAll('-', '/')
+        }}</time>に編集済み</p>
+      </div>
+      <p class="my-2 font-semibold">{{ props.post.description }}</p>
+      <!-- 見出し -->
+      <div v-if="h2List.length" class="">
+        <div class="flex flex-col">
+          <div class="sm:hidden">-------------------------------------------------</div>
+          <div class="sm:hidden">-------------------------------------------------</div>
+          <div class="hidden sm:block">---------------------------------------------------------------------</div>
+          <div class="hidden sm:block">---------------------------------------------------------------------</div>
+        </div>
+        <ul class="flex flex-col">
+          <li v-for="(h2, index) of h2List" :key="index" class="flex flex-col">
+            <div class="flex">
+              ・
+              <a :href="`#${h2}`" class="text-sky-600 hover:bg-gray-300">{{ h2 }}</a>
+            </div>
+            <span v-if="index !== h2List.length - 1">↓</span>
+          </li>
+        </ul>
+        <div class="flex flex-col">
+          <div class="sm:hidden">-------------------------------------------------</div>
+          <div class="sm:hidden">-------------------------------------------------</div>
+          <div class="hidden sm:block">---------------------------------------------------------------------</div>
+          <div class="hidden sm:block">---------------------------------------------------------------------</div>
+        </div>
+        <TagsComponent v-bind:tags="props.post.tags" class="mb-3" />
 
-    <h1 class="text-xl sm:text-3xl font-bold my-2">{{ editedTitle }}</h1>
-    <DateComponent :postedAt="post.postedAt" :revisedAt="post.revisedAt ?? 0" />
-    <TagsComponent :tags="props.post.tags"></TagsComponent>
-
-    <p class="bg-gray-100 p-2 mt-4 mb-2 rounded-md">{{ props.post.description }}</p>
+      </div>
+    </section>
     <!-- 本文 -->
     <section id="body-section">
       <p v-html="body"></p>
+    </section>
+    <!-- 共有 -->
+    <section class="my-4 mx-4  flex justify-end">
+      <div class="bg-gray-100 flex px-3 py-[2px] rounded-full items-center space-x-2">
+        <span class="material-symbols-outlined">google_plus_reshare</span>
+        <span>共有</span>
+        <!-- はてな -->
+        <a :href="`https://b.hatena.ne.jp/entry/panel/?url=${pageUrl}&title=${post.title}`" target="_blank"
+          class="hover:bg-gray-100"><img class="mx-2"
+            src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加"
+            width="30" height="30" style="border: none;" /></a>
+        <!-- twitter -->
+        <a :href="`http://twitter.com/share?url=${pageUrl}&text=${post.title}&related=nrpans`" target="_blank"
+          class="hover:bg-gray-100"><img
+            src="https://media.graphassets.com/resize=height:33,width:33/8da1NC6PRiwZmmkFvJTZ" /></a>
+      </div>
     </section>
   </div>
 </template>
 
 
 <style lang="scss" scoped>
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 200,
+    'opsz' 48
+}
+
 #body-section {
   ::v-deep(pre) {
     padding: 12px;
@@ -169,6 +154,10 @@ const json: string = marked(jsonExample);
   ::v-deep(a) {
     color: rgb(2 132 199);
     border-bottom: solid 1px;
+
+    &:hover {
+      background-color: rgb(255 255 255);
+    }
   }
 
   ::v-deep(p + p) {

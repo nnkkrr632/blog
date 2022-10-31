@@ -1,19 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 //GraphQL
-import { useApolloClient, provideApolloClient, useQuery, useResult } from '@vue/apollo-composable';
+import { provideApolloClient } from '@vue/apollo-composable';
 import apolloClient from '@/plugins/apolloClient';
 import gql from 'graphql-tag';
 
-
-import HomeView from '../views/HomeView.vue'
-import ListByTagView from '../views/ListByTag.vue'
-import DetailView from '../views/DetailView.vue'
-import ShortView from '../views/ShortView.vue'
-import ShortsTopView from '../views/ShortsTopView.vue'
-import TagsView from '../views/TagsView.vue'
-import InfoView from '../views/InfoView.vue'
-import TestView from '../views/TestView.vue'
-import { computed } from 'vue';
+import HomeView from '@/views/HomeView.vue'
+import ListByTagView from '@/views/ListByTagView.vue'
+import DetailView from '@/views/DetailView.vue'
+import ShortView from '@/views/ShortView.vue'
+import ShortsTopView from '@/views/ShortsTopView.vue'
+import TagsView from '@/views/TagsView.vue'
+import InfoView from '@/views/InfoView.vue'
+import TestView from '@/views/TestView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 provideApolloClient(apolloClient)
 
@@ -33,6 +32,17 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/tags',
+      name: 'tags',
+      component: TagsView
+    },
+    {
+      path: '/tags/:tagSlug',
+      name: 'list-by-tag',
+      component: ListByTagView,
+      props: true,
     },
     {
       path: '/posts/:slug',
@@ -65,13 +75,8 @@ query GetShortPosts {
   }
 }
 `;
-        const response = await apolloClient.query({
-          query: query
-        })
+        const response = await apolloClient.query({ query: query })
         const slug = response.data.posts[0].slug;
-        console.log(response)
-        console.log(response.data.posts)
-        console.log(response.data.posts[0].slug)
         next({ name: 'shorts', params: { slug: slug } })
       }
     },
@@ -88,22 +93,29 @@ query GetShortPosts {
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/AboutView.vue')
     // },
-
-    {
-      path: '/tags',
-      name: 'tags',
-      component: TagsView
-    },
-    {
-      path: '/tags/:tagSlug',
-      name: 'list-by-tag',
-      component: ListByTagView
-    },
     {
       path: '/test',
       name: 'test',
       component: TestView,
     },
+    // 404
+    // 呼び出し側：params「pathMatch」に配列を渡す。
+    // router.push({ name: 'not-found', params: { pathMatch: ['aaa', 'bbb', 'ccc'] } })
+    // URL→/aaa/bbb/ccc
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFoundView,
+    },
+
+    // 404その2 pathMatch に配列を指定しない場合はこっち(するとエラー)
+    // ↓router.push({name: 'not-found', params: { pathMatch: 'aaa'} })
+    // URL→/aaa
+    // {
+    //   path: '/:pathMatch(.*)',
+    //   name: 'not-found',
+    //   component: NotFoundView
+    // },
   ]
 })
 

@@ -30,7 +30,7 @@ onMounted(() => {
 
 </script>
 <template>
-  <div class="bg-gray-50 min-h-[calc(100vh-3.5rem)]">
+  <div class=" min-h-[calc(100vh-3.5rem)]">
     <img src="https://media.graphassets.com/resize=fit:crop,height:480,width:3000/rbxXTlktSqGvZ2snvv5g" />
 
     <div class="pt-4 px-6 sm:px-20 border-b">
@@ -62,10 +62,10 @@ onMounted(() => {
           <dt class="text-base my-5">リンク</dt>
           <div class="flex flex-wrap border-b pb-9">
             <dd class="basis-1/2">
-              <a href="https://github.com/nnkkrr632" target="_blank" class="text-sky-600">GitHub</a>
+              <a href="https://github.com/nnkkrr632" target="_blank" class="text-sky-600 hover:bg-white">GitHub</a>
             </dd>
             <dd class="basis-1/2">
-              <a href="https://twitter.com/nrpans" target="_blank" class="text-sky-600">Twitter</a>
+              <a href="https://twitter.com/nrpans" target="_blank" class="text-sky-600 hover:bg-white">Twitter</a>
             </dd>
             <!-- <dd class="basis-1/2 mt-6">
               <a href="https://twitter.com/nrpans" target="_blank" class="text-sky-600">Zenn</a>
@@ -84,8 +84,8 @@ onMounted(() => {
           <dd class="pb-3 border-b">TypeScript + Vue3 + Tailwind CSS</dd>
           <dt class="pt-3 text-gray-500">コンテンツ管理</dt>
           <dd class="pb-3 border-b">Hygraph (GraphCMS)</dd>
-          <dt class="pt-3 text-gray-500">ホスティング・デプロイ</dt>
-          <dd class="pb-3 border-b mb-8">Vercel + GitHub Actions</dd>
+          <dt class="pt-3 text-gray-500">ホスティング</dt>
+          <dd class="pb-3 border-b mb-8">Vercel</dd>
         </dl>
       </div>
     </div>

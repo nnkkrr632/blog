@@ -1,1 +1,2 @@
-<!-- Vue Router  でbeforeEnterをするためだけにコンポーネントを作成しています -->
+<!-- Vue Router  でbeforeEnterをするためだけにコンポーネントを作成 -->
+<!-- (component: XXX がないとbeforeEnterできない) -->
