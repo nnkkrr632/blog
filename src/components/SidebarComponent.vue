@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from 'vue-router';
 import { ref, onMounted, computed } from 'vue';
-//共通型
 import type { HasPostsTag } from '@/plugins/interfaces';
 import { getTags } from '@/plugins/myLibrary';
 

@@ -6,7 +6,9 @@
     "src/**/*.vue"
   ],
   "compilerOptions": {
-    "target": "esnext",
+    "lib": [
+      "ES2021",
+    ],
     "baseUrl": ".",
     "paths": {
       "@/*": [

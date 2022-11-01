@@ -1,12 +1,9 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
-//GraphQL
 import { useApolloClient } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
-//共通型
 import type { Post, HeadParams } from '../plugins/interfaces';
-//部品
 import DetailComponent from '../components/DetailComponent.vue';
 import PostFlatComponent from '../components/PostFlatComponent.vue';
 
