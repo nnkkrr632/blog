@@ -1,21 +1,17 @@
 export interface Post {
-  id: string;
   slug: string;
   postedAt: string;
-  revisedAt: string;
+  revisedAt?: string;
   title: string;
   description: string;
   isShorts: boolean;
   image: Image;
+  markdown: string;
   tags: Tag[];
-  body: string;
 }
 
 export interface Image {
-  id: string;
   url: string;
-  // height: number;
-  // width: number;
 }
 
 export interface Tag {
@@ -24,13 +20,12 @@ export interface Tag {
   image: Image;
 }
 
-export interface CountedTag extends Tag {
-  count: number;
+export interface HasPostsTag extends Tag {
+  posts: { slug: string }[]
 }
 
-export interface apiResponse<T> {
-  contents: T[];
-  totalCount: number;
-  offset: number;
-  limit: number;
+export interface HeadParams {
+  title: string;
+  description: string;
+  imageUrl?: string;
 }
