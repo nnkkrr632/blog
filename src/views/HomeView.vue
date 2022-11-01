@@ -42,8 +42,8 @@ const fetchPosts = async () => {
     });
     posts.value = fetchedPosts;
   } catch (e) {
-    console.log('HomeViewでエラー発生');
-    console.log(e);
+    // console.log('HomeViewでエラー発生');
+    // console.log(e);
   }
 };
 

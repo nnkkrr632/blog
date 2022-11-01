@@ -63,8 +63,8 @@ const fetchTagAndPosts = async () => {
     posts.value = fetchedPosts;
     tag.value = fetchedTag;
   } catch (e) {
-    console.log('ListByTagView。fetchTagAndPosts()でエラー発生');
-    console.log(e);
+    // console.log('ListByTagView。fetchTagAndPosts()でエラー発生');
+    // console.log(e);
   }
 };
 
@@ -83,7 +83,7 @@ const executeEmit = () => {
 
 // watchEffectはonMountedの前に開始されるので，onMounted()でfetchする必要がない
 watchEffect(async () => {
-  console.log('●●ListByTagViewでwatchEffect()開始')
+  // console.log('●●ListByTagViewでwatchEffect()開始')
   await fetchTagAndPosts();
   if (posts.value.length) {
     executeEmit();

@@ -40,8 +40,8 @@ const fetchPost = async () => {
     });
     post.value = fetchedPost;
   } catch (e) {
-    console.log('DetailVIew。fetchPost()でエラー発生');
-    console.log(e);
+    // console.log('DetailVIew。fetchPost()でエラー発生');
+    // console.log(e);
   }
 };
 const relatedPosts = ref<Post[]>([]);
@@ -86,8 +86,8 @@ const fetchRelatedPosts = async () => {
       });
       relatedPosts.value = fetchedPosts;
     } catch (e) {
-      console.log('DetailVIew。fetchRelatedPosts()でエラー発生');
-      console.log(e);
+      // console.log('DetailVIew。fetchRelatedPosts()でエラー発生');
+      // console.log(e);
     }
   }
 };
@@ -109,7 +109,7 @@ const router = useRouter();
 const route = useRoute();
 // ★onMounted前に開始され，propsの変更からフックされるのでonMounted()でfetchしなくてよい
 watchEffect(async () => {
-  console.log('●●DetailViewでwatchEffect()フックされた')
+  // console.log('●●DetailViewでwatchEffect()フックされた')
   await fetchPost();
   if (post.value) {
     await fetchRelatedPosts();

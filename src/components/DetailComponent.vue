@@ -24,7 +24,7 @@ const h2List = ref<string[]>();
 const editedTitle = ref('');
 //shortsではAPIfetchなしにデータだけ入れ替えで入ってくるのでwatchして反映する
 watchEffect(() => {
-  console.log('DetailComponentでwatchEffectの分岐入った。markdown→HTML変換と目次の生成とタイトルの編集を行う')
+  // console.log('DetailComponentでwatchEffectの分岐入った。markdown→HTML変換と目次の生成とタイトルの編集を行う')
   htmlDescription.value = marked(props.post.description)
   body.value = marked(props.post.markdown)
   const matches = Array.from(body.value.matchAll(/<h2 id="(.*)">/g));

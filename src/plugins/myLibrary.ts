@@ -42,7 +42,7 @@ export const getTags = async () => {
     });
     return sortedTags;
   } catch (e) {
-    console.log('タグ一覧取得でエラー発生');
-    console.log(e);
+    // console.log('タグ一覧取得でエラー発生');
+    // console.log(e);
   }
 };

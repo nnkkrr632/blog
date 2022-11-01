@@ -19,8 +19,8 @@ const fetchPostsCount = async () => {
     const { data: { postsConnection: { aggregate: { count : fetchedPostsCount } } } } = await client.query({ query: query });
     postsCount.value = fetchedPostsCount
   } catch (e) {
-    console.log('fetchPostsCount()でエラー発生');
-    console.log(e);
+    // console.log('fetchPostsCount()でエラー発生');
+    // console.log(e);
   }
 };
 
