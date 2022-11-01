@@ -7,7 +7,6 @@ import TagsComponent from './TagsComponent.vue';
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface Props extends Omit<Post, ''> {}
 const props = defineProps<{ post: Props; }>();
-console.log('props', props);
 
 const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : props.post.title);
 </script>

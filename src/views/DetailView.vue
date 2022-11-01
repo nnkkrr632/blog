@@ -41,8 +41,6 @@ const fetchPost = async () => {
       query: query,
       variables: { slug: props.slug },
     });
-
-    console.log('★DetailViewでfetchPost');
     post.value = fetchedPost;
   } catch (e) {
     console.log('DetailVIew。fetchPost()でエラー発生');
@@ -51,7 +49,6 @@ const fetchPost = async () => {
 };
 const relatedPosts = ref<Post[]>([]);
 const fetchRelatedPosts = async () => {
-  console.log('fetchRelatedPosts開始')
   if (post.value) {
     try {
       const relatedPostsQuery = gql`
@@ -90,9 +87,7 @@ const fetchRelatedPosts = async () => {
           tagSlugs: post.value.tags.map((tag) => tag.slug),
         },
       });
-      console.log('★DetailViewでfetchRelatedPost。結果↓');
       relatedPosts.value = fetchedPosts;
-      console.log('relatedPosts.value', relatedPosts.value);
     } catch (e) {
       console.log('DetailVIew。fetchRelatedPosts()でエラー発生');
       console.log(e);

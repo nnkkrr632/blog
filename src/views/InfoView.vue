@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import type { HeadParams } from '../plugins/interfaces';
 
 const postsCount = ref(0);
-const getContents = async () => {
+const fetchPostsCount = async () => {
   try {
     const query = gql`
     query PostsCount {
@@ -16,11 +16,10 @@ const getContents = async () => {
   }
 }`;
     const { client } = useApolloClient();
-    const response = await client.query({ query: query });
-    console.log(response);
-    postsCount.value = response.data.postsConnection.aggregate.count
+    const { data: { postsConnection: { aggregate: { count : fetchedPostsCount } } } } = await client.query({ query: query });
+    postsCount.value = fetchedPostsCount
   } catch (e) {
-    console.log('エラー発生');
+    console.log('fetchPostsCount()でエラー発生');
     console.log(e);
   }
 };
@@ -36,7 +35,7 @@ const executeEmit = () => {
   }
 
 onMounted(() => {
-  getContents();
+  fetchPostsCount();
   executeEmit();
 });
 
@@ -80,7 +79,7 @@ onMounted(() => {
               <a href="https://twitter.com/nrpans" target="_blank" class="text-sky-600 hover:bg-white">Twitter</a>
             </dd>
             <!-- <dd class="basis-1/2 mt-6">
-              <a href="https://twitter.com/nrpans" target="_blank" class="text-sky-600">Zenn</a>
+              <a href="" target="_blank" class="text-sky-600">Zenn</a>
             </dd> -->
           </div>
         </dl>

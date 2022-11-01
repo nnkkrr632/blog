@@ -8,7 +8,6 @@ import PostComponent from '@/components/PostComponent.vue';
 
 //VueRouterからURLの受け取り
 const props = defineProps<{ tagSlug: string }>();
-console.log('○○ props.tagSlug の更新？→', props.tagSlug)
 
 // ★useRouterはsetupスコープに定義する必要がある
 // @see https://stackoverflow.com/questions/70222571/vue-3-vue-router-4-typeerror-cannot-read-properties-of-undefined-reading-p
@@ -22,7 +21,6 @@ const fetchTagAndPosts = async () => {
   try {
     const { client } = useApolloClient();
     const { data: { posts: fetchedPosts, tag: fetchedTag } } = await client.query({
-    // const response = await client.query({
       // 変数を使う場合はqueryの後ろの()に {$変数名: 変数の型} を指定する(変数の型はなぜか大文字 ○:String ×:string)
       query: gql`
         query GetTagPosts($tagSlug: String) {
@@ -62,11 +60,10 @@ const fetchTagAndPosts = async () => {
         tagSlug: props.tagSlug,
       },
     });
-    console.log('ListByTagViewでfetchTagAndPosts()成功。')
     posts.value = fetchedPosts;
     tag.value = fetchedTag;
   } catch (e) {
-    console.log('ListByTagViewでエラー発生');
+    console.log('ListByTagView。fetchTagAndPosts()でエラー発生');
     console.log(e);
   }
 };

@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: 'https://nnkkrr632.microcms.io/api/v1/',
+  baseURL: import.meta.env.VITE_MICROCMS_API_ENDPOINT,
   timeout: 3000,
   headers: {
-    'X-MICROCMS-API-KEY': import.meta.env.VITE_API_KEY,
+    'X-MICROCMS-API-KEY': import.meta.env.VITE_MICROCMS_API_KEY,
 
     'Content-Type': 'application/json',
   },
