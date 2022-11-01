@@ -48,7 +48,7 @@ onMounted(() => {
       <div class="flex flex-wrap items-center space-x-4">
         <img src="https://avatars.githubusercontent.com/u/91203083" class="block w-14 sm:w-20 rounded-full" />
         <div>
-          <h1 class="text-lg sm:text-2xl xl:text-3xl">
+          <h1 class="text-lg sm:text-2xl">
             nrpan's技術ブログ
           </h1>
           <div class="mt-1 text-sm text-gray-500">記事数 {{ postsCount }}記事</div>
@@ -86,7 +86,7 @@ onMounted(() => {
       </div>
       <div class="basis-2/5">
         <div class="text-base border-b py-3 mt-3 sm:mt-6">統計情報</div>
-        <div class="py-3 border-b">2022/11/13 に作成</div>
+        <div class="py-3 border-b">2022/11/6 に作成</div>
         <div class="py-3 border-b">{{ postsCount }} 記事</div>
 
         <div class="text-base border-b py-3 mt-12">技術情報</div>

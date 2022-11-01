@@ -51,7 +51,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
       <div id="description" v-html="htmlDescription" class="my-3"></div>
       <!-- 目次 -->
       <div id="toc" v-if="h2List?.length" class="scroll-pt-4 snap-y">
-        <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 my-2"></div>
+        <div class="w-2/3 sm:w-1/3 border-y border-gray-600 border-dashed py-1 my-2"></div>
         <ul class="flex flex-col">
           <li v-for="(h2, index) of h2List" :key="index" class="flex flex-col">
             <div class="flex">
@@ -61,7 +61,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
             <span v-if="index !== h2List.length - 1">↓</span>
           </li>
         </ul>
-        <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 mt-2 mb-4"></div>
+        <div class="w-2/3 sm:w-1/3 border-y border-gray-600 border-dashed py-1 mt-2 mb-4"></div>
       </div>
       <TagsComponent v-bind:tags="props.post.tags" />
     </section>
