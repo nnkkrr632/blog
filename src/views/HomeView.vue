@@ -9,8 +9,6 @@ import type { Post, HeadParams } from '../plugins/interfaces';
 const posts = ref<Post[]>([]);
 const fetchPosts = async () => {
   try {
-    console.log('fetchPosts()開始。env読めてる？↓');
-    console.log(import.meta.env.VITE_SITE_DOMAIN)
     const { client } = useApolloClient();
     const { data: { posts: fetchedPosts } } = await client.query({
       query: gql`
