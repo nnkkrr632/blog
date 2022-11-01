@@ -6,8 +6,8 @@ const route = useRoute();
 const isShortsRoute = computed( () => {
   return route.name === 'shorts'
 })
-
 </script>
+
 <template>
     <header class="hidden sm:flex items-center bg-gray-400 h-14 px-5" :class="{ 'hidden': isShortsRoute }">
         <!-- <span class="material-symbols-outlined mr-5 cursor-pointer">menu</span> -->

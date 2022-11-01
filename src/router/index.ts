@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-//GraphQL
+// GraphQL
 import { provideApolloClient } from '@vue/apollo-composable';
 import apolloClient from '@/plugins/apolloClient';
 import gql from 'graphql-tag';
-
+// view
 import HomeView from '@/views/HomeView.vue'
 import ListByTagView from '@/views/ListByTagView.vue'
 import DetailView from '@/views/DetailView.vue'
@@ -11,7 +11,6 @@ import ShortView from '@/views/ShortView.vue'
 import ShortsTopView from '@/views/ShortsTopView.vue'
 import TagsView from '@/views/TagsView.vue'
 import InfoView from '@/views/InfoView.vue'
-import TestView from '@/views/TestView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
 provideApolloClient(apolloClient)
@@ -62,8 +61,6 @@ const router = createRouter({
       name: 'shortsTop',
       component: ShortsTopView,
       beforeEnter: async (to, from, next) => {
-        console.log('beforeEnter発動。')
-        console.log(to)
         const query = gql`
 query GetShortPosts {
   posts (
@@ -93,11 +90,7 @@ query GetShortPosts {
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/AboutView.vue')
     // },
-    {
-      path: '/test',
-      name: 'test',
-      component: TestView,
-    },
+    
     // 404
     // 呼び出し側：params「pathMatch」に配列を渡す。
     // router.push({ name: 'not-found', params: { pathMatch: ['aaa', 'bbb', 'ccc'] } })

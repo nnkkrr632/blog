@@ -8,8 +8,6 @@ export interface Post {
   image: Image;
   markdown: string;
   tags: Tag[];
-  left?: string;
-  right?: string;
 }
 
 export interface Image {
@@ -24,4 +22,10 @@ export interface Tag {
 
 export interface HasPostsTag extends Tag {
   posts: { slug: string }[]
+}
+
+export interface HeadParams {
+  title: string;
+  description: string;
+  imageUrl?: string;
 }

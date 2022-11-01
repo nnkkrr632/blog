@@ -12,7 +12,7 @@ const isHomeRoute = computed(() => {
   return route.name === 'home'
 })
 
-// タグ一覧
+// すべてのタグ
 const tags = ref<HasPostsTag[]>([]);
 const displayingTags = ref<HasPostsTag[]>([]);
 const defaultTagCount = 5;
@@ -39,7 +39,7 @@ const toggleTags = () => {
 </script>
 
 <template>
-  <div id="sidebar"
+  <aside id="SidebarComponent"
     class="hidden sm:flex flex-col tex-sm bg-white sm:w-16 xl:w-60 sticky top-0 xl:overflow-y-auto h-screen">
 
     <!-- サイト -->
@@ -63,11 +63,11 @@ const toggleTags = () => {
         <span class="text-[7px] xl:text-sm">ショート</span>
       </div>
     </RouterLink>
-    <!-- タグ一覧 -->
+    <!-- すべてのタグ -->
     <RouterLink to="/tags" class="hover:bg-gray-100 rounded-lg">
       <div class="flex flex-col xl:hidden items-center py-2 rounded-lg">
         <span class="material-symbols-outlined xl:mr-6">tag</span>
-        <span class="text-[7px] xl:text-sm">タグ一覧</span>
+        <span class="text-[7px] xl:text-sm">タグ</span>
       </div>
     </RouterLink>
     <!-- 情報 -->
@@ -78,7 +78,7 @@ const toggleTags = () => {
       </div>
     </RouterLink>
     <!-- タグリストセクション -->
-    <div id="tagListSection" class="hidden xl:block mb-24">
+    <div v-if="displayingTags" class="hidden xl:block mb-24">
       <!-- ボーダー -->
       <p class="mt-4 pt-4 border-t border-gray-200"></p>
       <!-- タグ別アイコン -->
@@ -94,7 +94,6 @@ const toggleTags = () => {
             <span class="pr-8">({{ tag.posts.length }})</span>
           </li>
         </RouterLink>
-
       </ul>
       <!-- トグル -->
       <div v-show="tagToggleSwitch.display"
@@ -108,7 +107,7 @@ const toggleTags = () => {
         </div>
       </div>
     </div>
-  </div>
+  </aside>
 </template>
 
 <style lang="scss" scoped>

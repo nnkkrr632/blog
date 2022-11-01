@@ -9,7 +9,6 @@ import TagsComponent from './TagsComponent.vue';
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface Props extends Omit<Post, ''> { }
 const props = defineProps<{ post: Props; }>();
-console.log('ここはDetailComponent.vue。props', props);
 
 //marked
 marked.setOptions({
@@ -19,12 +18,14 @@ marked.setOptions({
   breaks: true, // falseにすると改行入力は末尾の半角スペース2つになる
   silent: false, // trueにするとパースに失敗してもExceptionを投げなくなる
 });
+const htmlDescription = ref('');
 const body = ref('');
 const h2List = ref<[]>([]);
 const editedTitle = ref('');
 //shortsではAPIfetchなしにデータだけ入れ替えで入ってくるのでwatchして反映する
 watchEffect(() => {
-  console.log('DetailComponentでwatchEffectの分岐入った')
+  console.log('DetailComponentでwatchEffectの分岐入った。markdown→HTML変換と目次の生成とタイトルの編集を行う')
+  htmlDescription.value = marked(props.post.description)
   body.value = marked(props.post.markdown)
   const matches: string[] = Array.from(body.value.matchAll(/<h2 id="(.*)">/g));
   h2List.value = matches.map(match => match[1])
@@ -37,43 +38,32 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
 </script>
 
 <template>
-  <div class="sm:text-base">
+  <article class="sm:text-base">
     <h1 class="text-xl sm:text-3xl font-bold py-2 border-b">{{ editedTitle }}</h1>
+    <!-- 概要欄 -->
     <section class="bg-gray-100 p-3 mt-4 mb-2 rounded-lg">
-      <!-- 概要欄 -->
       <div class="flex flex-col sm:flex-row sm:space-x-5">
-        <p><time :datetime="post.postedAt" class="font-bold">{{ post.postedAt.replaceAll('-', '/') }}</time>に公開済み</p>
+        <p><time :datetime="post.postedAt" class="font-bold">{{ post.postedAt.replaceAll('-', '/') }}</time> に公開済み</p>
         <p v-if="post.revisedAt"><time :datetime="post.revisedAt" class="font-bold">{{
             post.revisedAt.replaceAll('-', '/')
-        }}</time>に編集済み</p>
+        }}</time> に編集済み</p>
       </div>
-      <p class="my-2 font-semibold">{{ props.post.description }}</p>
-      <!-- 見出し -->
-      <div v-if="h2List.length" class="">
-        <div class="flex flex-col">
-          <div class="sm:hidden">-------------------------------------------------</div>
-          <div class="sm:hidden">-------------------------------------------------</div>
-          <div class="hidden sm:block">---------------------------------------------------------------------</div>
-          <div class="hidden sm:block">---------------------------------------------------------------------</div>
-        </div>
+      <div id="description" v-html="htmlDescription" class="my-3"></div>
+      <!-- 目次 -->
+      <div id="toc" v-if="h2List.length" class="scroll-pt-4 snap-y">
+        <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 my-2"></div>
         <ul class="flex flex-col">
           <li v-for="(h2, index) of h2List" :key="index" class="flex flex-col">
             <div class="flex">
               ・
-              <a :href="`#${h2}`" class="text-sky-600 hover:bg-gray-300">{{ h2 }}</a>
+              <a :href="`#${h2}`" class="text-sky-600 snap-start hover:bg-gray-300">{{ h2 }}</a>
             </div>
             <span v-if="index !== h2List.length - 1">↓</span>
           </li>
         </ul>
-        <div class="flex flex-col">
-          <div class="sm:hidden">-------------------------------------------------</div>
-          <div class="sm:hidden">-------------------------------------------------</div>
-          <div class="hidden sm:block">---------------------------------------------------------------------</div>
-          <div class="hidden sm:block">---------------------------------------------------------------------</div>
-        </div>
-        <TagsComponent v-bind:tags="props.post.tags" class="mb-3" />
-
+        <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 mt-2 mb-4"></div>
       </div>
+      <TagsComponent v-bind:tags="props.post.tags" />
     </section>
     <!-- 本文 -->
     <section id="body-section">
@@ -95,7 +85,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
             src="https://media.graphassets.com/resize=height:33,width:33/8da1NC6PRiwZmmkFvJTZ" /></a>
       </div>
     </section>
-  </div>
+  </article>
 </template>
 
 
@@ -113,7 +103,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
     padding: 12px;
     box-sizing: border-box;
     margin-bottom: 12px;
-    border-radius: 0.375rem;
+    border-radius: 0.5rem;
     background-color: rgb(30 41 59);
     overflow-x: auto;
     color: white;
@@ -122,7 +112,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
 
   ::v-deep(:not(pre) > code) {
     font-style: italic;
-    background-color: rgb(226 232 240);
+    background-color: rgb(229 231 235);
     padding: 3px 6px;
     margin: 0 1px;
     border-radius: 0.2rem;
@@ -139,7 +129,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
       th {
         padding: 0.5rem;
         font-weight: bold;
-        background-color: rgb(203 213 225);
+        background-color: rgb(243 244 246);
         border: solid rgb(100 116 139) 1px;
       }
 
@@ -167,7 +157,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   ::v-deep(h2) {
     margin: 2.5rem 0 1.2rem;
     font-weight: bold;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     padding: 0 0 0.1rem;
     border-bottom: 1px solid rgb(203 213 225);
   }
@@ -189,9 +179,9 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   }
 
   ::v-deep(blockquote) {
-    border-left: 0.25rem solid rgb(226 232 240);
+    border-left: 0.25rem solid rgb(229 231 235);
     padding: 0 1rem;
-    color: rgb(71 85 105);
+    color: rgb(107 114 128);
   }
 
   ::v-deep(li) {
@@ -232,5 +222,4 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
 
 <!-- node_modules/hightlight.js/styles/github-dark.cssから読み込んでいる -->
 <style src="highlight.js/styles/github-dark.css">
-
 </style>

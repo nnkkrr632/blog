@@ -4,13 +4,13 @@ import { useRouter, useRoute } from 'vue-router';
 import DetailComponent from '../components/DetailComponent.vue';
 import { useApolloClient } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
-import type { Post } from '../plugins/interfaces';
+import type { Post, HeadParams } from '../plugins/interfaces';
 
 const router = useRouter();
 const route = useRoute();
 
 //ショートポスツの取得
-const posts = ref<Post[]>([]);
+const posts = ref<Post[]>();
 const fetchShortPosts = async () => {
   try {
     const query = gql`
@@ -30,7 +30,10 @@ const fetchShortPosts = async () => {
             tags {
               name
               slug
-          }
+            }
+            image {
+              url
+            }
         }
       }
       `;
@@ -44,31 +47,47 @@ const fetchShortPosts = async () => {
   }
 };
 
-// 現在のポスト& 左右矢印のポスト をはめ込む
-const post = ref<Post>();
-const leftPostSlug = ref<string>();
-const rightPostSlug = ref<string>();
-const embedPosts = () => {
-post.value = posts.value.find(post => post.slug === route.params.slug)
-const currentPostIndex = posts.value.findIndex(post => post.slug === route.params.slug)
-leftPostSlug.value = posts.value[currentPostIndex - 1]?.slug;
-rightPostSlug.value = posts.value[currentPostIndex + 1]?.slug;
-}
-
 onMounted(async () => {
   console.log('■ShortViewでonMounted')
   await fetchShortPosts();
-  embedPosts();
   if (!post.value) {
     router.push({ name: 'not-found', params: { pathMatch: ['shorts', `${route.params.slug}`] } })
   }
 });
 
+// 現在のポスト& 左右矢印のポスト をはめ込む
+const post = ref<Post>();
+const leftPostSlug = ref<string>();
+const rightPostSlug = ref<string>();
+const embedPosts = () => {
+  console.log('embedPosts()開始')
+  if (posts.value) {
+    post.value = posts.value.find(post => post.slug === route.params.slug)
+    const currentPostIndex = posts.value.findIndex(post => post.slug === route.params.slug)
+    leftPostSlug.value = posts.value[currentPostIndex - 1]?.slug;
+    rightPostSlug.value = posts.value[currentPostIndex + 1]?.slug;
+  }
+}
+
+//headタグ用
+const emit = defineEmits<{ (event: "updateHeadParams", params: HeadParams): void }>()
+const executeEmit = () => {
+  if (post.value) {
+    const params: HeadParams = {
+      title: `${post.value.title} #shorts`,
+      description: post.value.description,
+      imageUrl: post.value.image.url
+    }
+    emit('updateHeadParams', params)
+  }
+}
+
+// watchEffectはonMounted前に開始される
 watchEffect(() => {
   console.log('▲▲ShortVIewでwatchEffect()開始')
   embedPosts()
+  executeEmit();
 })
-
 </script>
 
 <template>
@@ -76,25 +95,26 @@ watchEffect(() => {
     <!-- フレックス -->
     <div class="text-start flex items-center">
       <!-- 左ボタン -->
-      <div class="hidden sm:inline-block sm:flex-1">
-        <span v-if="!leftPostSlug" class="material-symbols-outlined text-gray-200">arrow_back_ios</span>
-        <RouterLink v-else :to="{ name: 'shorts', params: { slug: leftPostSlug } }" class="hover:bg-white">
+      <div class="hidden sm:block sm:flex-1 text-right">
+        <RouterLink v-if="leftPostSlug" :to="{ name: 'shorts', params: { slug: leftPostSlug } }" class="hover:bg-white">
           <span class="material-symbols-outlined">arrow_back_ios</span>
         </RouterLink>
+        <span v-else class="material-symbols-outlined text-gray-200">arrow_back_ios</span>
       </div>
 
       <!-- 記事 -->
-      <div class="w-full sm:w-11/12">
+      <div class="w-full sm:w-[88%] 2xl:max-w-screen-2xl">
         <DetailComponent :post="post"
-          class="px-3 xl:px-5 py-3 sm:pb-10 overflow-y-auto h-[calc(100vh-6rem)] sm:h-screen" />
+          class="px-3 xl:px-5 sm:py-3 sm:pb-10 overflow-y-auto h-[calc(100vh-6rem)] sm:h-screen" />
       </div>
 
       <!-- 右ボタン -->
-      <div class="hidden sm:inline-block sm:flex-1">
-        <span v-if="!rightPostSlug" class="material-symbols-outlined text-gray-200">arrow_forward_ios</span>
-        <RouterLink v-else :to="{ name: 'shorts', params: { slug: rightPostSlug } }" class="hover:bg-white">
+      <div class="hidden sm:block sm:flex-1 pl-2">
+        <RouterLink v-if="rightPostSlug" :to="{ name: 'shorts', params: { slug: rightPostSlug } }"
+          class="hover:bg-white">
           <span class="material-symbols-outlined">arrow_forward_ios</span>
         </RouterLink>
+        <span v-else class="material-symbols-outlined text-gray-200">arrow_forward_ios</span>
       </div>
     </div>
 
@@ -102,17 +122,18 @@ watchEffect(() => {
     <div id="sp-footer" class="bg-white flex justify-around h-10 pt-[2px] sm:hidden">
       <!-- 左ボタン -->
       <div class="flex flex-col items-center">
-        <span v-if="!leftPostSlug" class="material-symbols-outlined text-gray-200">arrow_back_ios</span>
-        <RouterLink v-else :to="{ name: 'shorts', params: { slug: leftPostSlug } }" class="hover:bg-white">
+        <RouterLink v-if="leftPostSlug" :to="{ name: 'shorts', params: { slug: leftPostSlug } }" class="hover:bg-white">
           <span class="material-symbols-outlined">arrow_back_ios</span>
         </RouterLink>
+        <span v-else class="material-symbols-outlined text-gray-200">arrow_back_ios</span>
       </div>
       <!-- 右ボタン -->
       <div class="flex flex-col items-center">
-        <span v-if="!rightPostSlug" class="material-symbols-outlined text-gray-200">arrow_forward_ios</span>
-        <RouterLink v-else :to="{ name: 'shorts', params: { slug: rightPostSlug } }" class="hover:bg-white">
+        <RouterLink v-if="rightPostSlug" :to="{ name: 'shorts', params: { slug: rightPostSlug } }"
+          class="hover:bg-white">
           <span class="material-symbols-outlined">arrow_forward_ios</span>
         </RouterLink>
+        <span v-else class="material-symbols-outlined text-gray-200">arrow_forward_ios</span>
       </div>
     </div>
   </div>
@@ -125,7 +146,6 @@ watchEffect(() => {
     'wght' 700,
     'GRAD' 200,
     'opsz' 48;
-  font-size: 18px;
 }
 
 #sp-footer .material-symbols-outlined {

@@ -7,7 +7,6 @@ import TagsComponent from './TagsComponent.vue';
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface PostProps extends Omit<Post, ''> { }
 const props = defineProps<{ post: PostProps; }>();
-console.log('ここはPostFlatComponent。props.post.slug→', props.post.slug);
 
 const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : props.post.title);
 </script>
@@ -31,8 +30,8 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
           {{ props.post.description }}
         </p>
 
-        <div class="flex flex-wrap">
-          <DateComponent :postedAt="props.post.postedAt" />
+        <div class="flex flex-wrap xl:flex-col">
+          <DateComponent :postedAt="props.post.postedAt" class="mr-2 xl:mr-0" />
           <!-- タグs -->
           <TagsComponent v-bind:tags="props.post.tags" />
         </div>

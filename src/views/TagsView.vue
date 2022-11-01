@@ -1,23 +1,33 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 import { ref, onMounted } from 'vue';
-//共通型
-import type { HasPostsTag } from '@/plugins/interfaces';
+import type { HasPostsTag, HeadParams } from '@/plugins/interfaces';
 import { getTags } from '@/plugins/myLibrary';
 
+// すべてのタグ取得
+const tags = ref<HasPostsTag[]>();
 
-// タグ一覧
-const tags = ref<HasPostsTag[]>([]);
+//<head>用
+    const emit = defineEmits<{ (event: "updateHeadParams", params: HeadParams): void }>()
+const executeEmit = () => {
+    const params: HeadParams = {
+      title: `すべてのタグ`,
+      description: `すべてのタグを表示しています。`,
+    }
+    emit('updateHeadParams', params)
+  }
+
 onMounted(async () => {
-    tags.value = await getTags() ?? []
-    console.log('ここはTagsView。onMounted。tags.value→', tags.value)
+    tags.value = await getTags();
+    executeEmit();
 })
+
 </script>
 
 <template>
     <div class="m-2 min-h-[calc(100vh-6rem)]">
-        <h1 class="text-xl sm:font-semibold border-b pb-1 my-5">すべてのタグ</h1>
-        <div class="flex">
+        <h1 class="text-xl sm:font-semibold border-b pb-1 my-2 sm:my-5">すべてのタグ</h1>
+        <div v-if="tags" class="flex">
             <ul class="flex flex-col space-y-3 w-full pl-6 sm:pl-20 xl:pl-32 pr-10 sm:space-y-5 sm:basis-4/6">
                 <li v-for="tag in tags" :key="tag.slug" :tag="tag">
                     <!-- アイコンとテキストの横並び -->

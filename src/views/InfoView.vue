@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useApolloClient } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
+import type { HeadParams } from '../plugins/interfaces';
 
 const postsCount = ref(0);
 const getContents = async () => {
@@ -24,8 +25,19 @@ const getContents = async () => {
   }
 };
 
+//<head>用
+  const emit = defineEmits<{ (event: "updateHeadParams", params: HeadParams): void }>()
+const executeEmit = () => {
+    const params: HeadParams = {
+      title: `情報`,
+      description: `nrpan's技術ブログの情報を表示しています。`,
+    }
+    emit('updateHeadParams', params)
+  }
+
 onMounted(() => {
   getContents();
+  executeEmit();
 });
 
 </script>
@@ -37,7 +49,7 @@ onMounted(() => {
       <div class="flex flex-wrap items-center space-x-4">
         <img src="https://avatars.githubusercontent.com/u/91203083" class="block w-14 sm:w-20 rounded-full" />
         <div>
-          <h1 class="text-lg sm:text-xl xl:text-3xl font-semibold">
+          <h1 class="text-lg sm:text-2xl xl:text-3xl">
             nrpan's技術ブログ
           </h1>
           <div class="mt-1 text-sm text-gray-500">記事数 {{ postsCount }}記事</div>
@@ -51,9 +63,9 @@ onMounted(() => {
     <div class="flex flex-col sm:flex-row text-sm px-6 sm:px-20 space-y-12 sm:space-y-0 sm:space-x-32">
       <div class="basis-3/5">
         <dl>
-          <dt class="text-base mt-6 mb-5">説明</dt>
+          <dt class="text-base mt-6 sm:mt-9 mb-5">説明</dt>
           <dd class="border-b pb-8">
-            2022年からITエンジニアとして働いています。<br />業務や個人の学びを書きたいと思います(予定)。
+            2022年からITエンジニアとして働いています。<br />仕事や個人の学びを書きたいと思います(予定)。
           </dd>
           <dt class="text-base my-5">詳細</dt>
           <dd class="border-b pb-9 text-gray-500 text-xs">
@@ -74,7 +86,7 @@ onMounted(() => {
         </dl>
       </div>
       <div class="basis-2/5">
-        <div class="text-base border-b py-3 mt-3">統計情報</div>
+        <div class="text-base border-b py-3 mt-3 sm:mt-6">統計情報</div>
         <div class="py-3 border-b">2022/11/13 に作成</div>
         <div class="py-3 border-b">{{ postsCount }} 記事</div>
 
