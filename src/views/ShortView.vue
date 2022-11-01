@@ -40,7 +40,6 @@ const fetchShortPosts = async () => {
     const { client } = useApolloClient();
     const { data: { posts: fetchedPosts } } = await client.query({ query: query });
     posts.value = fetchedPosts
-    console.log('SHORT全件取得→', posts.value)
   } catch (e) {
     console.log('ShortViewのfetchでエラー発生');
     console.log(e);

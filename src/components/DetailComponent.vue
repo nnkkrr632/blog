@@ -20,14 +20,14 @@ marked.setOptions({
 });
 const htmlDescription = ref('');
 const body = ref('');
-const h2List = ref<[]>([]);
+const h2List = ref<string[]>();
 const editedTitle = ref('');
 //shortsではAPIfetchなしにデータだけ入れ替えで入ってくるのでwatchして反映する
 watchEffect(() => {
   console.log('DetailComponentでwatchEffectの分岐入った。markdown→HTML変換と目次の生成とタイトルの編集を行う')
   htmlDescription.value = marked(props.post.description)
   body.value = marked(props.post.markdown)
-  const matches: string[] = Array.from(body.value.matchAll(/<h2 id="(.*)">/g));
+  const matches = Array.from(body.value.matchAll(/<h2 id="(.*)">/g));
   h2List.value = matches.map(match => match[1])
   editedTitle.value = props.post.isShorts ? props.post.title + ' #shorts' : props.post.title
 })
@@ -50,7 +50,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
       </div>
       <div id="description" v-html="htmlDescription" class="my-3"></div>
       <!-- 目次 -->
-      <div id="toc" v-if="h2List.length" class="scroll-pt-4 snap-y">
+      <div id="toc" v-if="h2List?.length" class="scroll-pt-4 snap-y">
         <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 my-2"></div>
         <ul class="flex flex-col">
           <li v-for="(h2, index) of h2List" :key="index" class="flex flex-col">
@@ -222,4 +222,5 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
 
 <!-- node_modules/hightlight.js/styles/github-dark.cssから読み込んでいる -->
 <style src="highlight.js/styles/github-dark.css">
+
 </style>

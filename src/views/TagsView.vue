@@ -8,14 +8,14 @@ import { getTags } from '@/plugins/myLibrary';
 const tags = ref<HasPostsTag[]>();
 
 //<head>用
-    const emit = defineEmits<{ (event: "updateHeadParams", params: HeadParams): void }>()
+const emit = defineEmits<{ (event: "updateHeadParams", params: HeadParams): void }>()
 const executeEmit = () => {
     const params: HeadParams = {
-      title: `すべてのタグ`,
-      description: `すべてのタグを表示しています。`,
+        title: `すべてのタグ`,
+        description: `すべてのタグを表示しています。`,
     }
     emit('updateHeadParams', params)
-  }
+}
 
 onMounted(async () => {
     tags.value = await getTags();
@@ -34,7 +34,8 @@ onMounted(async () => {
                     <RouterLink :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
                         class="flex flex-wrap justify-between items-center hover:bg-gray-100 rounded-lg">
                         <div class="flex items-center">
-                            <img :src="tag.image.url" class="bg-white rounded-full w-10 h-10 sm:w-16 sm:h-16 mr-4 sm:mr-32" />
+                            <img :src="tag.image.url"
+                                class="bg-white rounded-full w-10 h-10 sm:w-16 sm:h-16 mr-4 sm:mr-32" />
                             <!-- テキストの縦並び -->
                             <div class="flex sm:flex-col">
                                 <h2 class="sm:text-xl">{{ tag.name }}</h2>
