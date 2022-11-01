@@ -128,7 +128,7 @@ const toggleTags = () => {
       background-color: rgb(209 213 219);
 
       div {
-          background-color: rgb(209 213 219);
+        background-color: rgb(209 213 219);
       }
     }
   }

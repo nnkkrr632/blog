@@ -23,7 +23,8 @@ const props = defineProps<{ isShortsRoute: Boolean; }>();
             <div class="text-[7px]">タグ</div>
         </RouterLink>
         <!-- 情報 -->
-        <RouterLink to="/info" class="basis-1/4 flex flex-col items-center h-full pt-[6px] hover:bg-gray-100 rounded-md">
+        <RouterLink to="/info"
+            class="basis-1/4 flex flex-col items-center h-full pt-[6px] hover:bg-gray-100 rounded-md">
             <span class="material-symbols-outlined ">info</span>
             <div class="text-[7px]">情報</div>
         </RouterLink>
