@@ -33,7 +33,7 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
       <!-- タグs -->
       <TagsComponent v-bind:tags="props.post.tags" />
       <div v-if="isToday(props.post.postedAt)" class="mt-1">
-        <span class="bg-red-600 text-white px-1">◎ プレミア公開</span>
+        <span class="bg-red-600 text-white px-1 rounded-sm">◎ プレミア公開</span>
       </div>
     </div>
   </RouterLink>

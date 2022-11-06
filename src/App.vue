@@ -55,7 +55,7 @@ const reflectParams = (emittedHeadParams: HeadParams) => {
       <meta name="twitter:description" :content="headParams.description" />
       <meta name="twitter:image" :content="headParams.imageUrl" />
     </head>
-    <div class="bg-white text-gray-800">
+    <div>
       <!-- ヘッダー -->
       <!-- <HeaderComponent /> -->
       <!-- 中身 -->
