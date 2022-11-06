@@ -71,8 +71,12 @@ query GetShortPosts {
 }
 `;
         const response = await apolloClient.query({ query: query })
-        const slug = response.data.posts[0].slug;
-        next({ name: 'shorts', params: { slug: slug } })
+        const slug = response.data.posts[0]?.slug;
+        if(slug) {
+          next({ name: 'shorts', params: { slug: slug } })
+        } else {
+          next();
+        }
       }
     },
     {
