@@ -29,7 +29,7 @@ const reflectParams = (emittedHeadParams: HeadParams) => {
 </script>
 
 <template>
-  <div>
+  <div class="bg-white text-gray-800">
     <!-- App.vueの↓<head>がbodyの中なのに反映される不思議 -->
 
     <head>
