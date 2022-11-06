@@ -96,7 +96,7 @@ watchEffect(async () => {
 
 <template>
   <div v-if="tag && posts">
-    <h1 class="text-xl sm:font-semibold border-b pb-1 my-5 mx-2">#{{ tag.name }} の記事</h1>
+    <h1 class="text-xl sm:font-semibold border-b pb-1 my-2 sm:my-5 mx-2">#{{ tag.name }} の記事</h1>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 sm:w-[95%] 2xl:max-w-screen-2xl mx-auto">
       <PostComponent v-for="post in posts" :key="post.slug" :post="post" />
     </div>

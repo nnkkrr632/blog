@@ -121,10 +121,10 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div v-if="post" class="px-3 sm:px-4 py-5 break-all w-full text-start 2xl:max-w-screen-2xl mx-auto">
+  <div v-if="post" class="px-3 xl:px-5 sm:py-3 break-all w-full text-start 2xl:max-w-screen-2xl mx-auto">
     <DetailComponent :post="post" />
 
-    <aside>
+    <aside v-if="relatedPosts.length">
       <div class="pt-12 sm:pt-20 pb-5 xl:pb-10 border-t-2">
         <h2 class="inline px-[10px] py-[6px] text-gray-100 xl:text-lg bg-gray-800 rounded-lg">関連記事</h2>
       </div>

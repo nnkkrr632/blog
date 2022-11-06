@@ -46,3 +46,15 @@ export const getTags = async () => {
     // console.log(e);
   }
 };
+
+export const isToday = (date: string): Boolean => {
+  const hyphenDate = date.replaceAll('-', '/')
+  const today = new Date()
+  const formatted = today
+  .toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+  return formatted === hyphenDate;
+}

@@ -64,7 +64,7 @@ onMounted(() => {
         <dl>
           <dt class="text-base mt-6 sm:mt-9 mb-5">説明</dt>
           <dd class="border-b pb-8">
-            2022年からITエンジニアとして働いています。<br />仕事や個人の学びを書きたいと思います(予定)。
+            2022年からITエンジニアとして働いています。<br />仕事や個人での学び・メモを残したいと思います(予定)。
           </dd>
           <dt class="text-base my-5">詳細</dt>
           <dd class="border-b pb-9 text-gray-500 text-xs">

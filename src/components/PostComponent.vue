@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import type { Post } from '@/plugins/interfaces';
 import DateComponent from './DateComponent.vue';
 import TagsComponent from './TagsComponent.vue';
+import { isToday } from '@/plugins/myLibrary'
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface Props extends Omit<Post, ''> { }
@@ -31,7 +32,9 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
       <DateComponent :postedAt="props.post.postedAt" :revisedAt="props.post.revisedAt ?? ''" />
       <!-- タグs -->
       <TagsComponent v-bind:tags="props.post.tags" />
-
+      <div v-if="isToday(props.post.postedAt)" class="mt-1">
+        <span class="bg-red-600 text-white px-1">◎ プレミア公開</span>
+      </div>
     </div>
   </RouterLink>
 </template>
