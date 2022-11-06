@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
-import type { Post } from '../plugins/interfaces';
+import type { Post } from '@/plugins/interfaces';
 import { marked } from 'marked';
 import hljs from 'highlight.js';
 import TagsComponent from './TagsComponent.vue';
+import { isToday } from '@/plugins/myLibrary'
 
 //Vue3.2では直接definePropsにimportした型をあてられないらしい
 interface Props extends Omit<Post, ''> { }
@@ -20,15 +21,17 @@ marked.setOptions({
 });
 const htmlDescription = ref('');
 const body = ref('');
-const h2List = ref<string[]>();
+const h2List = ref<{id: string, name: string}[]>();
 const editedTitle = ref('');
 //shortsではAPIfetchなしにデータだけ入れ替えで入ってくるのでwatchして反映する
 watchEffect(() => {
-  console.log('DetailComponentでwatchEffectの分岐入った。markdown→HTML変換と目次の生成とタイトルの編集を行う')
+  // console.log('DetailComponentでwatchEffectの分岐入った。markdown→HTML変換と目次の生成とタイトルの編集を行う')
   htmlDescription.value = marked(props.post.description)
   body.value = marked(props.post.markdown)
-  const matches = Array.from(body.value.matchAll(/<h2 id="(.*)">/g));
-  h2List.value = matches.map(match => match[1])
+  const matches = Array.from(body.value.matchAll(/<h2 id="(.*)">(.*)<\/h2>/g));
+  h2List.value = matches.map(match => {
+    return { id: match[1], name: match[2] }
+  });
   editedTitle.value = props.post.isShorts ? props.post.title + ' #shorts' : props.post.title
 })
 
@@ -42,7 +45,8 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
     <h1 class="text-xl sm:text-3xl font-bold py-2 border-b">{{ editedTitle }}</h1>
     <!-- 概要欄 -->
     <section class="bg-gray-100 p-3 mt-4 mb-2 rounded-lg">
-      <div class="flex flex-col sm:flex-row sm:space-x-5">
+      <div class="flex flex-col sm:flex-row sm:space-x-4">
+        <p v-if="isToday(post.postedAt)">プレミア公開中。</p>
         <p><time :datetime="post.postedAt" class="font-bold">{{ post.postedAt.replaceAll('-', '/') }}</time> に公開済み</p>
         <p v-if="post.revisedAt"><time :datetime="post.revisedAt" class="font-bold">{{
             post.revisedAt.replaceAll('-', '/')
@@ -51,17 +55,17 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
       <div id="description" v-html="htmlDescription" class="my-3"></div>
       <!-- 目次 -->
       <div id="toc" v-if="h2List?.length" class="scroll-pt-4 snap-y">
-        <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 my-2"></div>
+        <div class="w-2/3 sm:w-1/3 border-y border-gray-600 border-dashed py-1 my-2"></div>
         <ul class="flex flex-col">
           <li v-for="(h2, index) of h2List" :key="index" class="flex flex-col">
             <div class="flex">
               ・
-              <a :href="`#${h2}`" class="text-sky-600 snap-start hover:bg-gray-300">{{ h2 }}</a>
+              <a v-html="h2.name" :href="`#${h2.id}`" class="text-sky-600 snap-start hover:bg-gray-300"></a>
             </div>
             <span v-if="index !== h2List.length - 1">↓</span>
           </li>
         </ul>
-        <div class="w-full sm:w-1/2 border-y border-gray-600 border-dashed py-1 mt-2 mb-4"></div>
+        <div class="w-2/3 sm:w-1/3 border-y border-gray-600 border-dashed py-1 mt-2 mb-4"></div>
       </div>
       <TagsComponent v-bind:tags="props.post.tags" />
     </section>
@@ -102,7 +106,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   ::v-deep(pre) {
     padding: 12px;
     box-sizing: border-box;
-    margin-bottom: 12px;
+    margin-bottom: 24px;
     border-radius: 0.5rem;
     background-color: rgb(30 41 59);
     overflow-x: auto;
@@ -158,7 +162,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
     margin: 2.5rem 0 1.2rem;
     font-weight: bold;
     font-size: 1.5rem;
-    padding: 0 0 0.1rem;
+    padding: 0 0 0.2rem;
     border-bottom: 1px solid rgb(203 213 225);
   }
 
@@ -175,7 +179,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   }
 
   ::v-deep(img) {
-    margin: 0.2rem 0 1.2rem;
+    margin: 0.2rem 0 1.4rem;
   }
 
   ::v-deep(blockquote) {
@@ -189,7 +193,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   }
 
   ::v-deep(ul) {
-    margin: 0.4rem 0 0.4rem 1rem;
+    margin: 0.5rem 0 0.5rem 1rem;
 
     li {
       text-indent: -1rem;
@@ -199,11 +203,15 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
         content: '・';
         font-size: 120%;
       }
+
+      p {
+        display: inline;
+      }
     }
   }
 
   ::v-deep(ol) {
-    margin: 0.4rem 0 0.4rem 1rem;
+    margin: 0.5rem 0 0.5rem 1rem;
 
     li {
       list-style-position: inside;

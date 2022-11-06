@@ -19,8 +19,8 @@ const fetchPostsCount = async () => {
     const { data: { postsConnection: { aggregate: { count : fetchedPostsCount } } } } = await client.query({ query: query });
     postsCount.value = fetchedPostsCount
   } catch (e) {
-    console.log('fetchPostsCount()でエラー発生');
-    console.log(e);
+    // console.log('fetchPostsCount()でエラー発生');
+    // console.log(e);
   }
 };
 
@@ -48,7 +48,7 @@ onMounted(() => {
       <div class="flex flex-wrap items-center space-x-4">
         <img src="https://avatars.githubusercontent.com/u/91203083" class="block w-14 sm:w-20 rounded-full" />
         <div>
-          <h1 class="text-lg sm:text-2xl xl:text-3xl">
+          <h1 class="text-lg sm:text-2xl">
             nrpan's技術ブログ
           </h1>
           <div class="mt-1 text-sm text-gray-500">記事数 {{ postsCount }}記事</div>
@@ -64,7 +64,7 @@ onMounted(() => {
         <dl>
           <dt class="text-base mt-6 sm:mt-9 mb-5">説明</dt>
           <dd class="border-b pb-8">
-            2022年からITエンジニアとして働いています。<br />仕事や個人の学びを書きたいと思います(予定)。
+            2022年からITエンジニアとして働いています。<br />仕事や個人での学び・メモを残したいと思います(予定)。
           </dd>
           <dt class="text-base my-5">詳細</dt>
           <dd class="border-b pb-9 text-gray-500 text-xs">
@@ -86,7 +86,7 @@ onMounted(() => {
       </div>
       <div class="basis-2/5">
         <div class="text-base border-b py-3 mt-3 sm:mt-6">統計情報</div>
-        <div class="py-3 border-b">2022/11/13 に作成</div>
+        <div class="py-3 border-b">2022/11/6 に作成</div>
         <div class="py-3 border-b">{{ postsCount }} 記事</div>
 
         <div class="text-base border-b py-3 mt-12">技術情報</div>

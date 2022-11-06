@@ -40,8 +40,8 @@ const fetchPost = async () => {
     });
     post.value = fetchedPost;
   } catch (e) {
-    console.log('DetailVIew。fetchPost()でエラー発生');
-    console.log(e);
+    // console.log('DetailVIew。fetchPost()でエラー発生');
+    // console.log(e);
   }
 };
 const relatedPosts = ref<Post[]>([]);
@@ -86,8 +86,8 @@ const fetchRelatedPosts = async () => {
       });
       relatedPosts.value = fetchedPosts;
     } catch (e) {
-      console.log('DetailVIew。fetchRelatedPosts()でエラー発生');
-      console.log(e);
+      // console.log('DetailVIew。fetchRelatedPosts()でエラー発生');
+      // console.log(e);
     }
   }
 };
@@ -109,7 +109,7 @@ const router = useRouter();
 const route = useRoute();
 // ★onMounted前に開始され，propsの変更からフックされるのでonMounted()でfetchしなくてよい
 watchEffect(async () => {
-  console.log('●●DetailViewでwatchEffect()フックされた')
+  // console.log('●●DetailViewでwatchEffect()フックされた')
   await fetchPost();
   if (post.value) {
     await fetchRelatedPosts();
@@ -121,10 +121,10 @@ watchEffect(async () => {
 </script>
 
 <template>
-  <div v-if="post" class="px-3 sm:px-4 py-5 break-all w-full text-start 2xl:max-w-screen-2xl mx-auto">
+  <div v-if="post" class="px-3 xl:px-5 sm:py-3 break-all w-full text-start 2xl:max-w-screen-2xl mx-auto">
     <DetailComponent :post="post" />
 
-    <aside>
+    <aside v-if="relatedPosts.length">
       <div class="pt-12 sm:pt-20 pb-5 xl:pb-10 border-t-2">
         <h2 class="inline px-[10px] py-[6px] text-gray-100 xl:text-lg bg-gray-800 rounded-lg">関連記事</h2>
       </div>

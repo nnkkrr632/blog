@@ -42,7 +42,19 @@ export const getTags = async () => {
     });
     return sortedTags;
   } catch (e) {
-    console.log('タグ一覧取得でエラー発生');
-    console.log(e);
+    // console.log('タグ一覧取得でエラー発生');
+    // console.log(e);
   }
 };
+
+export const isToday = (date: string): Boolean => {
+  const hyphenDate = date.replaceAll('-', '/')
+  const today = new Date()
+  const formatted = today
+  .toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+  return formatted === hyphenDate;
+}
