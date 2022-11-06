@@ -79,12 +79,12 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
         <span class="material-symbols-outlined">google_plus_reshare</span>
         <span>共有</span>
         <!-- はてな -->
-        <a :href="`https://b.hatena.ne.jp/entry/panel/?url=${pageUrl}&title=${post.title}`" target="_blank"
+        <a :href="`https://b.hatena.ne.jp/entry/panel/?url=${pageUrl}&title=${encodeURIComponent(editedTitle)}`" target="_blank"
           class="hover:bg-gray-100"><img class="mx-2"
             src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加"
             width="30" height="30" style="border: none;" /></a>
         <!-- twitter -->
-        <a :href="`http://twitter.com/share?url=${pageUrl}&text=${post.title}&related=nrpans`" target="_blank"
+        <a :href="`http://twitter.com/share?url=${pageUrl}&text=${encodeURIComponent(editedTitle)}&related=nrpans`" target="_blank"
           class="hover:bg-gray-100"><img
             src="https://media.graphassets.com/resize=height:33,width:33/8da1NC6PRiwZmmkFvJTZ" /></a>
       </div>
