@@ -42,11 +42,11 @@ onMounted(() => {
 </script>
 <template>
   <div class=" min-h-[calc(100vh-3.5rem)]">
-    <img src="https://media.graphassets.com/resize=fit:crop,height:480,width:3000/rbxXTlktSqGvZ2snvv5g" />
+    <img src="https://media.graphassets.com/resize=fit:crop,height:400,width:2500/rbxXTlktSqGvZ2snvv5g" alt="情報ページのヘッダー写真"/>
 
     <div class="pt-4 px-6 sm:px-20 border-b">
       <div class="flex flex-wrap items-center space-x-4">
-        <img src="https://avatars.githubusercontent.com/u/91203083" class="block w-14 sm:w-20 rounded-full" />
+        <img src="https://avatars.githubusercontent.com/u/91203083" class="block w-14 sm:w-20 rounded-full" alt="プロフィールアイコン"/>
         <div>
           <h1 class="text-lg sm:text-2xl">
             nrpan's技術ブログ

@@ -52,7 +52,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
             post.revisedAt.replaceAll('-', '/')
         }}</time> に編集済み</p>
       </div>
-      <div id="description" v-html="htmlDescription" class="my-3"></div>
+      <div v-html="htmlDescription" class="my-3"></div>
       <!-- 目次 -->
       <div id="toc" v-if="h2List?.length" class="scroll-pt-4 snap-y">
         <div class="w-2/3 sm:w-1/3 border-y border-gray-600 border-dashed py-1 my-2"></div>
@@ -86,7 +86,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
         <!-- twitter -->
         <a :href="`http://twitter.com/share?url=${pageUrl}&text=${encodeURIComponent(editedTitle)}&related=nrpans`" target="_blank"
           class="hover:bg-gray-100"><img
-            src="https://media.graphassets.com/resize=height:33,width:33/8da1NC6PRiwZmmkFvJTZ" /></a>
+            src="https://media.graphassets.com/resize=height:33,width:33/8da1NC6PRiwZmmkFvJTZ" alt="Twitterで共有"/></a>
       </div>
     </section>
   </article>

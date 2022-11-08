@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { RouterLink, useRoute } from 'vue-router';
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import type { HasPostsTag } from '@/plugins/interfaces';
 import { getTags } from '@/plugins/myLibrary';
 
 // URLによるHTML&CSSの調整
-const props = defineProps<{ isShortsRoute: Boolean; }>();
 const route = useRoute();
-const isHomeRoute = computed(() => {
-  return route.name === 'home'
-})
 
 // すべてのタグ
 const tags = ref<HasPostsTag[]>([]);
@@ -38,13 +34,12 @@ const toggleTags = () => {
 </script>
 
 <template>
-  <aside id="SidebarComponent"
-    class="hidden sm:flex flex-col tex-sm bg-white sm:w-16 xl:w-60 sticky top-0 xl:overflow-y-auto h-screen">
+  <aside class="hidden sm:flex flex-col tex-sm bg-white sm:w-16 xl:w-60 sticky top-0 xl:overflow-y-auto h-screen">
 
     <!-- サイト -->
-    <div class="flex flex-col xl:flex-row items-center  py-2 xl:pl-5 rounded-lg">
-      <span class="text-lg xl:mr-6" title="nrpan's技術ブログ">🍳</span>
-      <h1 v-if="isHomeRoute" class="hidden xl:inline text-sm">nrpan's技術ブログ</h1>
+    <div class="flex flex-col xl:flex-row items-center  py-2 xl:pl-5 rounded-lg" title="nrpan's技術ブログ">
+      <span class="text-lg xl:mr-6">🍳</span>
+      <h1 v-if="route.name === 'home'" class="hidden xl:inline text-sm">nrpan's技術ブログ</h1>
       <div v-else class="hidden xl:inline text-sm">nrpan's技術ブログ</div>
     </div>
     <!-- ホーム -->
@@ -55,7 +50,7 @@ const toggleTags = () => {
       </div>
     </RouterLink>
     <!-- ショート -->
-    <RouterLink :to="{ name: 'shortsTop' }" :class="{ 'router-link-active': props.isShortsRoute }"
+    <RouterLink :to="{ name: 'shortsTop' }" :class="{ 'router-link-active': route.name === 'shorts' }"
       class="hover:bg-gray-100 rounded-lg">
       <div class="flex flex-col xl:flex-row items-center py-2 xl:pl-5 rounded-lg">
         <span class="material-symbols-outlined xl:mr-6">electric_bolt</span>
@@ -87,7 +82,7 @@ const toggleTags = () => {
           :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }">
           <li class="flex justify-between items-center hover:bg-gray-100 py-2 pl-5 rounded-lg">
             <div class="flex items-center space-x-5">
-              <img :src="tag.image.url" width="25" class="inline rounded-full" />
+              <img :src="tag.image.url" class="inline rounded-full w-6" :alt="tag.name" />
               <span>{{ tag.name }}</span>
             </div>
             <span class="pr-8">({{ tag.posts.length }})</span>

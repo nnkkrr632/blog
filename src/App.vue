@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { RouterView } from 'vue-router';
-import { useRoute } from 'vue-router';
+import { ref } from 'vue';
+import { RouterView, useRoute } from 'vue-router';
 // import HeaderComponent from './components/HeaderComponent.vue';
 import FooterComponent from './components/FooterComponent.vue';
 import SidebarComponent from './components/SidebarComponent.vue';
 import type { HeadParams } from '@/plugins/interfaces';
 
 const route = useRoute();
-const isShortsRoute = computed(() => {
-  return route.name === 'shorts'
-})
 
 // <head>
 const siteDomain = import.meta.env.VITE_SITE_DOMAIN
@@ -35,6 +31,8 @@ const reflectParams = (emittedHeadParams: HeadParams) => {
     <head>
       <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+      <link href="https://media.graphassets.com/resize=fit:crop,height:400,width:2500/rbxXTlktSqGvZ2snvv5g" as="image"
+        rel="preload">
       <link rel="canonical" :href="siteDomain + route.fullPath" />
       <meta v-if="route.name === 'not-found'" name="robots" content="noindex, nofollow" />
       <title>{{ headParams.title }}</title>
@@ -61,14 +59,14 @@ const reflectParams = (emittedHeadParams: HeadParams) => {
       <!-- 中身 -->
       <div class="flex">
         <!-- サイドバー -->
-        <SidebarComponent :isShortsRoute="isShortsRoute" />
+        <SidebarComponent />
         <!-- 中身 -->
         <main class="break-all w-full sm:w-[calc(100%-4rem)] xl:w-[calc(100%-15rem)] mb-14 sm:mb-0">
           <RouterView @updateHeadParams="reflectParams" />
         </main>
       </div>
       <!-- フッター -->
-      <FooterComponent :isShortsRoute="isShortsRoute" />
+      <FooterComponent />
     </div>
   </div>
 </template>

@@ -15,7 +15,7 @@ export const getTags = async () => {
             image {
               url(
                 transformation: {
-                  image: { resize: { width: 100, height: 100, fit: crop } }
+                  image: { resize: { width: 64, height: 64, fit: crop } }
                 }
               )
             }

@@ -41,13 +41,13 @@ const fetchShortPosts = async () => {
     const { data: { posts: fetchedPosts } } = await client.query({ query: query });
     posts.value = fetchedPosts
   } catch (e) {
-    // console.log('ShortViewのfetchでエラー発生');
+    // console.log('ShortsViewのfetchでエラー発生');
     // console.log(e);
   }
 };
 
 onMounted(async () => {
-  // console.log('■ShortViewでonMounted')
+  // console.log('■ShortsViewでonMounted')
   await fetchShortPosts();
   if (!post.value) {
     router.push({ name: 'not-found', params: { pathMatch: ['shorts', `${route.params.slug}`] } })
@@ -83,7 +83,7 @@ const executeEmit = () => {
 
 // watchEffectはonMounted前に開始される
 watchEffect(() => {
-  // console.log('▲▲ShortVIewでwatchEffect()開始')
+  // console.log('▲▲ShortsViewでwatchEffect()開始')
   embedPosts()
   executeEmit();
 })

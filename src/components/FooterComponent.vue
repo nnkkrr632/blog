@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const props = defineProps<{ isShortsRoute: Boolean; }>();
+import { RouterLink, useRoute } from 'vue-router';
+const route = useRoute();
 </script>
 
 <template>
@@ -12,7 +13,7 @@ const props = defineProps<{ isShortsRoute: Boolean; }>();
         <!-- ショート -->
         <RouterLink :to="{ name: 'shortsTop' }"
             class="basis-1/4 flex flex-col items-center h-full pt-[6px] hover:bg-gray-100 rounded-md"
-            :class="{ 'router-link-active': props.isShortsRoute }">
+            :class="{ 'router-link-active': route.name === 'shorts' }">
             <span class="material-symbols-outlined">electric_bolt</span>
             <div class="text-[7px]">ショート</div>
         </RouterLink>

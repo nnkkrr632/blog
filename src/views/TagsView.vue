@@ -34,7 +34,7 @@ onMounted(async () => {
                     <RouterLink :to="{ name: 'list-by-tag', params: { tagSlug: tag.slug } }"
                         class="flex flex-wrap justify-between items-center hover:bg-gray-100 rounded-lg">
                         <div class="flex items-center">
-                            <img :src="tag.image.url"
+                            <img :src="tag.image.url" :alt="tag.name"
                                 class="bg-white rounded-full w-10 h-10 sm:w-16 sm:h-16 mr-4 sm:mr-32" />
                             <!-- テキストの縦並び -->
                             <div class="flex sm:flex-col">
