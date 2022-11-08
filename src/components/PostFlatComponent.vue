@@ -17,12 +17,12 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
       class="flex flex-wrap items-center xl:items-start p-1 xl:p-2 text-start break-words font-semibold hover:bg-gray-100">
       <!-- 画像 -->
       <div class="relative w-32 xl:w-64">
-        <img class="rounded-lg" :class="{ absolute: props.post.isShorts }" :src="props.post.image.url" />
-        <img v-if="props.post.isShorts" class="rounded-lg" src="https://media.graphassets.com/rWtEJuPZTMm9U4sPsKLV" />
+        <img class="rounded-lg" :class="{ absolute: props.post.isShorts }" :src="props.post.image.url" :alt="props.post.title"/>
+        <img v-if="props.post.isShorts" class="rounded-lg" src="https://media.graphassets.com/rWtEJuPZTMm9U4sPsKLV" alt="shortsFrame" />
       </div>
 
       <!-- テキスト -->
-      <div class="flex-1 text-area mx-3">
+      <div class="flex-1 mx-3">
         <h3 :title="editedTitle" class="line-clamp-4 xl:font-semibold xl:text-lg">
           {{ editedTitle }}
         </h3>

@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 import HomeView from '@/views/HomeView.vue'
 import ListByTagView from '@/views/ListByTagView.vue'
 import DetailView from '@/views/DetailView.vue'
-import ShortView from '@/views/ShortView.vue'
+import ShortsView from '@/views/ShortsView.vue'
 import ShortsTopView from '@/views/ShortsTopView.vue'
 import TagsView from '@/views/TagsView.vue'
 import InfoView from '@/views/InfoView.vue'
@@ -50,7 +50,7 @@ const router = createRouter({
     {
       path: '/shorts/:slug',
       name: 'shorts',
-      component: ShortView,
+      component: ShortsView,
       props: true,
     },
 
@@ -81,6 +81,7 @@ query GetShortPosts {
     },
     {
       path: '/info',
+      name: 'info',
       component: InfoView
     },
     // ↓最初から書いてあった
