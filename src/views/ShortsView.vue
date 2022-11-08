@@ -118,16 +118,16 @@ watchEffect(() => {
     </div>
 
     <!-- スマホ用固定フッター -->
-    <div id="sp-footer" class="bg-white flex justify-around h-10 pt-[2px] sm:hidden">
+    <div id="sp-footer" class="bg-white border-t flex justify-around h-10 pt-[2px] sm:hidden">
       <!-- 左ボタン -->
-      <div class="flex flex-col items-center">
+      <div class="pl-3">
         <RouterLink v-if="leftPostSlug" :to="{ name: 'shorts', params: { slug: leftPostSlug } }" class="hover:bg-white">
           <span class="material-symbols-outlined">arrow_back_ios</span>
         </RouterLink>
         <span v-else class="material-symbols-outlined text-gray-200">arrow_back_ios</span>
       </div>
       <!-- 右ボタン -->
-      <div class="flex flex-col items-center">
+      <div class="px-[6px]">
         <RouterLink v-if="rightPostSlug" :to="{ name: 'shorts', params: { slug: rightPostSlug } }"
           class="hover:bg-white">
           <span class="material-symbols-outlined">arrow_forward_ios</span>

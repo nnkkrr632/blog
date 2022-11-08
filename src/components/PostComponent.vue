@@ -23,9 +23,9 @@ const editedTitle = ref(props.post.isShorts ? props.post.title + ' #shorts' : pr
     </div>
 
     <div class="mx-3">
-      <h3 :title="editedTitle" class="line-clamp-3 text-lg mt-1 font-semibold">
+      <h2 :title="editedTitle" class="line-clamp-3 text-lg mt-1 font-semibold">
         {{ editedTitle }}
-      </h3>
+      </h2>
       <p :title="props.post.description" class="line-clamp-6 mt-1 text-gray-500 text-sm">
         {{ props.post.description }}
       </p>
