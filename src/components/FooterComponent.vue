@@ -4,7 +4,7 @@ const route = useRoute();
 </script>
 
 <template>
-    <footer class="sm:hidden flex items-center bg-white w-full h-14 z-50 bottom-0 fixed">
+    <footer class="sm:hidden flex items-center bg-white w-full h-14 z-50 bottom-0 fixed" :class="{ 'border-t': route.name !== 'shorts' }">
         <!-- ホーム -->
         <RouterLink to="/" class="basis-1/4 flex flex-col items-center h-full pt-[6px] hover:bg-gray-100 rounded-md">
             <span class="material-symbols-outlined">home</span>

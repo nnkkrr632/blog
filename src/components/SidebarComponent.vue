@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, useRoute } from 'vue-router';
 import { ref, onMounted } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
 import type { HasPostsTag } from '@/plugins/interfaces';
 import { getTags } from '@/plugins/myLibrary';
 
@@ -91,15 +91,19 @@ const toggleTags = () => {
       </ul>
       <!-- トグル -->
       <div v-show="tagToggleSwitch.display"
-        class="flex flex-col xl:flex-row items-center cursor-pointer  py-2 hover:bg-gray-100 xl:pl-5"
+        class="flex flex-col xl:flex-row items-center cursor-pointer  py-2 hover:bg-gray-100 xl:pl-5 rounded-lg"
         @click="toggleTags">
         <span class="material-symbols-outlined mr-5">{{
             tagToggleSwitch.image
         }}</span>
-        <div class="text-sm">
+        <span class="text-sm">
           {{ tagToggleSwitch.text }}
-        </div>
+        </span>
       </div>
+    </div>
+    <!-- コピーライト -->
+    <div class="flex h-full items-end">
+      <p class=" mx-auto xl:mx-5 text-xs text-gray-500 mb-4">© @nrpans</p>
     </div>
   </aside>
 </template>

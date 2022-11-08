@@ -86,7 +86,7 @@ onMounted(() => {
       </div>
       <div class="basis-2/5">
         <div class="text-base border-b py-3 mt-3 sm:mt-6">統計情報</div>
-        <div class="py-3 border-b">2022/11/6 に作成</div>
+        <div class="py-3 border-b">2022/11/06 に作成</div>
         <div class="py-3 border-b">{{ postsCount }} 記事</div>
 
         <div class="text-base border-b py-3 mt-12">技術情報</div>

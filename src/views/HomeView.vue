@@ -27,7 +27,7 @@ const fetchPosts = async () => {
               id
               url(
                 transformation: {
-                  image: { resize: { width: 320, height: 180, fit: crop } }
+                  image: { resize: { width: 480, height: 270, fit: crop } }
                 }
               )
             }
