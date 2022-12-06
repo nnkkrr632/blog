@@ -1,0 +1,1 @@
+<template>エリア名前ビュー</template>

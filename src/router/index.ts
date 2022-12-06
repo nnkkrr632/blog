@@ -13,6 +13,10 @@ import TagsView from '@/views/TagsView.vue'
 import InfoView from '@/views/InfoView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 
+import AreaView from '@/views/AreaView.vue'
+import AreaIdView from '@/views/AreaIdView.vue'
+import AreaNameView from '@/views/AreaNameView.vue'
+
 provideApolloClient(apolloClient)
 
 const router = createRouter({
@@ -25,10 +29,32 @@ const router = createRouter({
     }
   },
   routes: [
+
     {
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    // パラメータが数字にマッチ
+    // 例. area/1, area/999
+    {
+      path: '/:areaId([1-9][0-9]*)',
+      name: 'area-id',
+      component: AreaIdView
+    },
+    // パラメータが1文字以上の半角英字にマッチ
+    // 例. area/shinjuku, area/naha
+    {
+      path: '/:areaName([a-z]+)',
+      name: 'area-name',
+      component: AreaNameView
+    },
+    // 都道府県、都道府県/市区町村、都道府県/市区町村/町名 にマッチ
+    // 例. tokyo, tokyo/shibuya, tokyo/setagaya/mishuku
+    {
+      path: '/area/:area+',
+      name: 'area',
+      component: AreaView
     },
     {
       path: '/tags',
@@ -72,7 +98,7 @@ query GetShortPosts {
 `;
         const response = await apolloClient.query({ query: query })
         const slug = response.data.posts[0]?.slug;
-        if(slug) {
+        if (slug) {
           next({ name: 'shorts', params: { slug: slug } })
         } else {
           next();
@@ -81,6 +107,11 @@ query GetShortPosts {
     },
     {
       path: '/info',
+      name: 'info',
+      component: InfoView
+    },
+    {
+      path: '/o/:orderId',
       name: 'info',
       component: InfoView
     },
@@ -93,13 +124,13 @@ query GetShortPosts {
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import('../views/AboutView.vue')
     // },
-    
+
     // 404
     // 呼び出し側：params「pathMatch」に配列を渡す。
     // router.push({ name: 'not-found', params: { pathMatch: ['aaa', 'bbb', 'ccc'] } })
     // URL→/aaa/bbb/ccc
     {
-      path: '/:pathMatch(.*)*',
+      path: '/:matchAnything(.*)*',
       name: 'not-found',
       component: NotFoundView,
     },
