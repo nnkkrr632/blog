@@ -103,7 +103,7 @@ const toggleTags = () => {
     </div>
     <!-- コピーライト -->
     <div class="flex h-full items-end">
-      <p class=" mx-auto xl:mx-5 text-xs text-gray-500 mb-4">© @nrpans</p>
+      <p class=" mx-auto xl:mx-5 text-[0.6rem] xl:text-xs text-gray-500 mb-4">© @nrpans</p>
     </div>
   </aside>
 </template>
