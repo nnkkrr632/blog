@@ -117,7 +117,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   ::v-deep(:not(pre) > code) {
     font-style: italic;
     background-color: rgb(229 231 235);
-    padding: 3px 6px;
+    padding: 2px 6px;
     margin: 0 1px;
     border-radius: 0.2rem;
   }
@@ -185,6 +185,7 @@ const pageUrl = import.meta.env.VITE_SITE_DOMAIN + route.fullPath
   ::v-deep(blockquote) {
     border-left: 0.25rem solid rgb(229 231 235);
     padding: 0 1rem;
+    margin: 0.4rem 0 1rem;
     color: rgb(107 114 128);
   }
 
